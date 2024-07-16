@@ -39,3 +39,8 @@ canvas{
       background-image: url('./assets/img/product\ section\ background.jpg');
       background-size: cover;
 }
+
+.extented-menu{
+      clip-path: polygon(100% 100%, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+      transition: clip-path 0.3s;
+}

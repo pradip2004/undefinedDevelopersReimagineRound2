@@ -164,12 +164,75 @@ window.addEventListener('beforeunload', () => {
 
 
 // add svg to navbar logo
-const svgLogoColor = "#FFFFFF"
-const svg = ` <svg id="Group_11948" data-name="Group 11948" xmlns="http://www.w3.org/2000/svg" width="124" height="22" viewBox="0 0 124 22">
+// let svgLogoColor = "#FFFFFF"
+const getSvgLogo = (color) =>{
+    return ` <svg id="Group_11948" data-name="Group 11948" xmlns="http://www.w3.org/2000/svg" width="124" height="22" viewBox="0 0 124 22">
                                     <g id="Layer_x0020_1" transform="translate(35.939)">
-                                      <path id="Path_4372" data-name="Path 4372" d="M192.95-.01h0V1.676h-6.783V20.345h-3.525V1.676h-6.8V-.01H192.95Zm53.948,0h1.928L262.2,14.521V-.01h1.7V20.344h-.794L248.6,4.215v16.2l-1.7.039V-.01ZM228.662,12.467H236.1l-3.6-7.9ZM233.71-.01h0l9.7,20.436h-3.518l-3.148-6.669h-8.685L224.8,20.426h-1.869L232.853-.01h.856Zm-10.425,0H206.178V1.676h6.8V20.345H216.5V1.676h6.783V-.01ZM197.8-.01h3.525V20.345H197.8Z" transform="translate(-175.843 0.01)" fill="${svgLogoColor}" fill-rule="evenodd"/>
+                                      <path id="Path_4372" data-name="Path 4372" d="M192.95-.01h0V1.676h-6.783V20.345h-3.525V1.676h-6.8V-.01H192.95Zm53.948,0h1.928L262.2,14.521V-.01h1.7V20.344h-.794L248.6,4.215v16.2l-1.7.039V-.01ZM228.662,12.467H236.1l-3.6-7.9ZM233.71-.01h0l9.7,20.436h-3.518l-3.148-6.669h-8.685L224.8,20.426h-1.869L232.853-.01h.856Zm-10.425,0H206.178V1.676h6.8V20.345H216.5V1.676h6.783V-.01ZM197.8-.01h3.525V20.345H197.8Z" transform="translate(-175.843 0.01)" fill="${color}" fill-rule="evenodd"/>
                                     </g>
-                                    <path id="Path_4372-2" data-name="Path 4372" d="M21.455,7.37c1.9,4.492-.858,11.057-5.3,12.625V2.924h7.05L25.071-.01H13.127l0,20.486V21.99c6.188-.393,11.855-5.327,11.855-11.58a11.938,11.938,0,0,0-.4-3.04H21.455ZM11.928-.01H-.01L1.848,2.924H8.9v17.07C4.5,18.442,1.631,11.771,3.614,7.37H.467a11.946,11.946,0,0,0-.4,3.04c0,6.253,5.667,11.187,11.855,11.58V20.476l0-20.486Z" transform="translate(0.01 0.01)" fill="${svgLogoColor}" fill-rule="evenodd"/>
+                                    <path id="Path_4372-2" data-name="Path 4372" d="M21.455,7.37c1.9,4.492-.858,11.057-5.3,12.625V2.924h7.05L25.071-.01H13.127l0,20.486V21.99c6.188-.393,11.855-5.327,11.855-11.58a11.938,11.938,0,0,0-.4-3.04H21.455ZM11.928-.01H-.01L1.848,2.924H8.9v17.07C4.5,18.442,1.631,11.771,3.614,7.37H.467a11.946,11.946,0,0,0-.4,3.04c0,6.253,5.667,11.187,11.855,11.58V20.476l0-20.486Z" transform="translate(0.01 0.01)" fill="${color}" fill-rule="evenodd"/>
                                   </svg>`
-document.querySelector(".navbar-top-logo").innerHTML = svg;
+}
+
+function updateSvgColor(color) {
+    document.querySelector('.navbar-top-logo').innerHTML = getSvgLogo(color);
+}
+
+// Initial SVG render
+updateSvgColor("#FFFFFF");
+
+function menuOpenBtn() {
+    let isOpen = false;
+
+    document.querySelector('.menu-btn').addEventListener('click', function () {
+        const clipDiv = document.querySelector('.extented-menu');
+        const openClipPath = 'polygon(0 0, 100% 0, 100% 50%, 100% 100%, 0 100%, 0 50%)';
+        const closedClipPath = 'polygon(100% 100%, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%)';
+
+        if (isOpen) {
+            let t1 = gsap.timeline();
+            t1.to(clipDiv, {
+                ease: "expo.inOut",
+                clipPath: closedClipPath,
+                duration: 1
+            });
+            t1.to(".navbar-upper-section", {
+                onStart: ()=>{
+                    document.querySelector('.navbar-upper-section').classList.remove('bg-[#f8eddb]');
+                    document.querySelectorAll('.icon').forEach(icon => {
+                        icon.classList.remove('text-black');
+                    });
+                    updateSvgColor("#FFFFFF");
+                },
+                duration: 1, 
+                ease: "power2.out"
+            }, ">-0.1")
+        } else { 
+            let t1 = gsap.timeline();
+            t1.to(clipDiv, {
+                ease: "expo.inOut",
+                clipPath: openClipPath,
+                duration: 1
+            });
+
+            t1.to(".navbar-upper-section", {
+                onStart: ()=>{
+                    document.querySelector('.navbar-upper-section').classList.add('bg-[#f8eddb]');
+                    document.querySelectorAll('.icon').forEach(icon => {
+                        icon.classList.add('text-black');
+                    });
+                    updateSvgColor("#000000");
+                    document.querySelector(".menu-btn").classList.add("bg-black");
+                    document.querySelector(".menu-btn").classList.remove("bg-white");
+                },
+                duration: 1, 
+                ease: "power2.out"
+            }, ">-0.1")
+        }
+
+        isOpen = !isOpen;
+    });
+}
+
+menuOpenBtn()
 
