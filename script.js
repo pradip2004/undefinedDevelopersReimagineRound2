@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import VanillaTilt from 'vanilla-tilt';
 import * as dat from 'dat.gui';
 
 const renderer = new THREE.WebGLRenderer({
@@ -165,7 +166,7 @@ window.addEventListener('beforeunload', () => {
 
 // add svg to navbar logo
 // let svgLogoColor = "#FFFFFF"
-const getSvgLogo = (color) =>{
+const getSvgLogo = (color) => {
     return ` <svg id="Group_11948" data-name="Group 11948" xmlns="http://www.w3.org/2000/svg" width="124" height="22" viewBox="0 0 124 22">
                                     <g id="Layer_x0020_1" transform="translate(35.939)">
                                       <path id="Path_4372" data-name="Path 4372" d="M192.95-.01h0V1.676h-6.783V20.345h-3.525V1.676h-6.8V-.01H192.95Zm53.948,0h1.928L262.2,14.521V-.01h1.7V20.344h-.794L248.6,4.215v16.2l-1.7.039V-.01ZM228.662,12.467H236.1l-3.6-7.9ZM233.71-.01h0l9.7,20.436h-3.518l-3.148-6.669h-8.685L224.8,20.426h-1.869L232.853-.01h.856Zm-10.425,0H206.178V1.676h6.8V20.345H216.5V1.676h6.783V-.01ZM197.8-.01h3.525V20.345H197.8Z" transform="translate(-175.843 0.01)" fill="${color}" fill-rule="evenodd"/>
@@ -190,6 +191,14 @@ function menuOpenBtn() {
         const closedClipPath = 'polygon(100% 100%, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%)';
 
         if (isOpen) {
+            gsap.to(".toggle-menu-name", {
+                duration: 0.1,
+                ease: "power2.out",
+                onStart: () => {
+                    document.querySelector(".toggle-menu-name").classList.remove("-translate-y-6")
+                },
+                delay: 1
+            })
             let t1 = gsap.timeline();
             t1.to(clipDiv, {
                 ease: "expo.inOut",
@@ -197,17 +206,29 @@ function menuOpenBtn() {
                 duration: 1
             });
             t1.to(".navbar-upper-section", {
-                onStart: ()=>{
+                onStart: () => {
                     document.querySelector('.navbar-upper-section').classList.remove('bg-[#f8eddb]');
                     document.querySelectorAll('.icon').forEach(icon => {
                         icon.classList.remove('text-black');
                     });
                     updateSvgColor("#FFFFFF");
+                    document.querySelector(".menu-btn").classList.add("bg-white", "text-black");
+                    document.querySelector(".menu-btn").classList.remove("bg-black");
+                    // document.querySelector(".menu-btn > div > div").classList.add("-translate-y-6")
                 },
-                duration: 1, 
+                duration: 1,
                 ease: "power2.out"
             }, ">-0.1")
-        } else { 
+
+        } else {
+            gsap.to(".toggle-menu-name", {
+                duration: 0.1,
+                ease: "power2.out",
+                onStart: () => {
+                    document.querySelector(".menu-btn > div > div").classList.add("-translate-y-6")
+                },
+                delay: 1
+            })
             let t1 = gsap.timeline();
             t1.to(clipDiv, {
                 ease: "expo.inOut",
@@ -216,16 +237,16 @@ function menuOpenBtn() {
             });
 
             t1.to(".navbar-upper-section", {
-                onStart: ()=>{
+                onStart: () => {
                     document.querySelector('.navbar-upper-section').classList.add('bg-[#f8eddb]');
                     document.querySelectorAll('.icon').forEach(icon => {
                         icon.classList.add('text-black');
                     });
                     updateSvgColor("#000000");
-                    document.querySelector(".menu-btn").classList.add("bg-black");
-                    document.querySelector(".menu-btn").classList.remove("bg-white");
+                    document.querySelector(".menu-btn").classList.add("bg-black", "text-white");
+                    document.querySelector(".menu-btn").classList.remove("bg-white", "text-black");
                 },
-                duration: 1, 
+                duration: 1,
                 ease: "power2.out"
             }, ">-0.1")
         }
@@ -235,4 +256,68 @@ function menuOpenBtn() {
 }
 
 menuOpenBtn()
+
+// product tilt effect 
+
+VanillaTilt.init(document.querySelectorAll(".product-card"), {
+    max: 25,
+    speed: 400
+});
+
+
+//new arrival
+
+const bgColors = [
+    "#faba4a",
+    "#0D1317",
+    "#E7B592",
+    "#754488"
+]
+
+const bgColorElement = document.querySelector(".new-arrival-background");
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray(".item").forEach((item, index)=>{
+    let img = item.querySelector(".item-img img");
+
+    gsap.fromTo(img, {
+        scale: 1.25
+    }, {
+        scale: 1,
+        duration: 0.5,
+        ease: "power1.out",
+        scrollTrigger: {
+            trigger: item,
+            scroller: ".main",
+            markers: false,
+            start: "center bottom",
+            end: "bottom top",
+            scrub: true,
+            onEnter: () => updateArrivalBg(bgColors[index]),
+            onEnterBack: () => updateArrivalBg(bgColors[index]),
+        }
+    })
+})
+
+function updateArrivalBg(color){
+    gsap.to(bgColorElement, {
+        background: `linear-gradient(0deg, ${color} 0%, rgba(252, 176, 69, 0) 100%)`,
+        duration: 1,
+        ease: "power1.out"
+    })
+}
+
+
+//marquee
+
+
+let tween = gsap.to(".marquee-part", {
+    xPercent: -100,
+    repeat: -1,
+    duration: 5,
+    ease: "linear",
+}).totalProgress(0.5);
+
+gsap.set(".marquee-inner", {xPercent: -50})
+
+
 

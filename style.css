@@ -1,33 +1,67 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-*{
+
+@font-face {
+      font-family: titleFont;
+      src: url(./assets/fonts/Product\ Sans\ Bold.ttf);
+}
+
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
 }
 
-html, body{
-      overflow-x: hidden; /* Prevent horizontal overflow */
+html,
+body {
+      overflow-x: hidden;
+      /* Prevent horizontal overflow */
       height: 100%;
       width: 100%;
 }
+
 .main {
       width: 100%;
       height: 100%;
-      overflow-y: scroll; /* Enable vertical scrolling */
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
-    }
+      /* Enable vertical scrolling */
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      /* Smooth scrolling for mobile devices */
+}
 
-canvas{
+/* theme  */
+.main[theme="black"] {
+      background-color: #000000;
+}
+
+.main[theme="white"] {
+      background-color: #ffffff;
+      color: #000000;
+}
+
+.main[theme="white"] .icon {
+      color: #000000;
+}
+
+.main[theme="white"] .menu-btn {
+      background-color: #000000;
+      color: #ffffff;
+}
+
+.main[theme="white"] .menu-btn>span {
+      background-color: #ffffff;
+}
+
+
+canvas {
       position: fixed;
       top: 0;
       height: 100vh;
       z-index: 2;
       pointer-events: none;
-  }
+}
 
-.hero-section{
+.hero-section {
       /* background-color: red; */
       background-image: url('./assets/img/hero\ section\ background.jpg');
       background-position: bottom;
@@ -35,12 +69,70 @@ canvas{
       background-size: cover;
 }
 
-.product-section{
+.product-section {
       background-image: url('./assets/img/product\ section\ background.jpg');
       background-size: cover;
 }
 
-.extented-menu{
+.extented-menu {
       clip-path: polygon(100% 100%, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
       transition: clip-path 0.3s;
+
 }
+
+.menu-item>h1 {
+      transition: opacity 0.8s ease-in;
+}
+
+.menu-item:hover h1 {
+      opacity: 1;
+}
+
+.product-card:hover {
+      background-image: url('./assets/img/product-card-bg.png');
+      background-size: cover;
+}
+
+.product-card:hover .product-card-price {
+      transform: translateY(0);
+}
+
+.product-card:hover .product-card-title {
+      transform: translateY(100%);
+}
+
+.product-card-price {
+      background: linear-gradient(to top, #000000, transparent);
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in;
+}
+
+
+.new-arrival-background {
+      background: rgb(250, 186, 74);
+      background: linear-gradient(0deg,
+                  #3b3b3b 0%,
+                  rgba(256, 176, 69, 0) 100%);
+}
+.new-arrival-title{
+      -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+      mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+}
+.new-arrival-title h1 {
+      font-family: titleFont;
+      text-transform: uppercase;
+      -webkit-text-stroke: 2px #fff;
+      color: transparent;
+      transition: color 1s;
+}
+
+.filled-text {
+      color: white;
+  }
+
+  .marquee-part{
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 4px;
+  }
