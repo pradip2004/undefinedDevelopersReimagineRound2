@@ -6,6 +6,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import VanillaTilt from 'vanilla-tilt';
 import * as dat from 'dat.gui';
+import { Draggable } from 'gsap/all';
+import InertiaPlugin from 'gsap/all';
 
 const renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -276,7 +278,7 @@ const bgColors = [
 
 const bgColorElement = document.querySelector(".new-arrival-background");
 gsap.registerPlugin(ScrollTrigger);
-gsap.utils.toArray(".item").forEach((item, index)=>{
+gsap.utils.toArray(".item").forEach((item, index) => {
     let img = item.querySelector(".item-img img");
 
     gsap.fromTo(img, {
@@ -298,7 +300,7 @@ gsap.utils.toArray(".item").forEach((item, index)=>{
     })
 })
 
-function updateArrivalBg(color){
+function updateArrivalBg(color) {
     gsap.to(bgColorElement, {
         background: `linear-gradient(0deg, ${color} 0%, rgba(252, 176, 69, 0) 100%)`,
         duration: 1,
@@ -317,7 +319,72 @@ let tween = gsap.to(".marquee-part", {
     ease: "linear",
 }).totalProgress(0.5);
 
-gsap.set(".marquee-inner", {xPercent: -50})
+gsap.set(".marquee-inner", { xPercent: -50 })
+
+
+//brand animation
+gsap.registerPlugin(Draggable, InertiaPlugin);
+function animateElement(el) {
+    gsap.to(el, {
+        y: "+=20",  // move up 20px
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+}
+let randomColors = [
+    "#dbfe87",
+    "#ffe381",
+    "#ed254e",
+    "#d4f5f5",
+    "#aafcb8",
+    "#e16f7c",
+    "#ddf8e8",
+    "#fff07c",
+    "#fe938c",
+    "#f4442e",
+    "#04e762",
+    "#f5b700",
+    "#004346",
+    "#75dddd",
+    "#f5b0cb",
+    "#d05353",
+    "#b10f2e",
+    "#73fbd3",
+]
+
+gsap.utils.toArray(".brand").forEach((el) => {
+    animateElement(el);
+    el.addEventListener("mouseover", () => {
+        const randomIndex = Math.floor(Math.random() * randomColors.length);
+        const randomColor = randomColors[randomIndex];
+        el.style.borderColor = randomColor;
+        el.setAttribute("data-currentColor", randomColor);
+    });
+    el.addEventListener("click", ()=>{
+
+    })
+    el.addEventListener("mouseout", () => {
+        el.style.borderColor = "white";
+    });
+
+    el.addEventListener("click", () => {
+        const currentColor = el.getAttribute("data-currentColor");
+        if (currentColor) {
+            el.style.backgroundColor = currentColor;
+            setTimeout(() => {
+                el.style.backgroundColor = "transparent";
+            }, 2000);
+        }
+    });
+    Draggable.create(el, {
+        bounds: ".brands",
+        inertia: true,
+        onDragEnd: () => animateElement(el)
+    });
+});
+
 
 
 

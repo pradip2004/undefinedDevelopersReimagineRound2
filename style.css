@@ -136,3 +136,9 @@ canvas {
       flex-shrink: 0;
       padding: 0 4px;
   }
+  
+  .brand{
+      z-index: 25;
+  }
+
+  
