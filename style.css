@@ -10,6 +10,7 @@
       padding: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
+      scroll-behavior: smooth;
 }
 
 html,
@@ -118,7 +119,7 @@ canvas {
       -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
       mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
 }
-.new-arrival-title h1 {
+.new-arrival-title h1, .movement-text-title h1 {
       font-family: titleFont;
       text-transform: uppercase;
       -webkit-text-stroke: 2px #fff;
@@ -141,4 +142,25 @@ canvas {
       z-index: 25;
   }
 
+
+  #movement-section-canvas>canvas{
+      max-height: 100vh;
+      max-width: 100vw;
+      position: relative;
+  }
+
+  .innerCircle {
+      transition: background-color 0.5s;
+    }
+
+    #canvas2{
+      position: absolute;
+      top: 60%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 50%;
+      height: auto;
+      display: none;
+      /* background-color: red; */
+    }
   

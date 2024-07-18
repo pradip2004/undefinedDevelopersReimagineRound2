@@ -9,6 +9,9 @@ import * as dat from 'dat.gui';
 import { Draggable } from 'gsap/all';
 import InertiaPlugin from 'gsap/all';
 
+
+
+
 const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
@@ -362,7 +365,7 @@ gsap.utils.toArray(".brand").forEach((el) => {
         el.style.borderColor = randomColor;
         el.setAttribute("data-currentColor", randomColor);
     });
-    el.addEventListener("click", ()=>{
+    el.addEventListener("click", () => {
 
     })
     el.addEventListener("mouseout", () => {
@@ -374,7 +377,13 @@ gsap.utils.toArray(".brand").forEach((el) => {
         if (currentColor) {
             el.style.backgroundColor = currentColor;
             setTimeout(() => {
-                el.style.backgroundColor = "transparent";
+                // el.style.backgroundColor = "transparent";
+                gsap.to(el, {
+                    backgroundColor: "transparent",
+                    duration: 1,
+                    ease: "power1.out",
+                    onComplete: () => animateElement(el)
+                })
             }, 2000);
         }
     });
@@ -387,4 +396,424 @@ gsap.utils.toArray(".brand").forEach((el) => {
 
 
 
+gsap.fromTo(".main", {
+    background: "transparent",
+}, {
+    background: "#3b3b3b",
+    duration: 1,
+    ease: "power2.out",
+    scrollTrigger: {
+        trigger: ".brands-section",
+        scroller: ".main",
+        markers: false,
+        start: "top 90%",
+        end: "top 50%",
+        scrub: true,
+    }
+})
 
+//canvas animation
+
+function canvas2() {
+    const canvas = document.querySelector("#movement-section-canvas>canvas");
+    const context = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+
+    window.addEventListener("resize", function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        render();
+    });
+
+    function files(index) {
+        var data = `
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_000.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_001.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_002.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_003.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_004.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_005.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_006.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_007.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_008.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_009.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_010.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_011.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_012.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_013.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_014.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_015.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_016.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_017.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_018.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_019.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_020.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_021.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_022.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_023.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_024.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_025.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_026.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_027.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_028.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_029.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_030.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_031.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_032.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_033.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_034.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_035.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_036.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_037.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_038.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_039.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_040.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_041.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_042.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_043.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_044.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_045.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_046.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_047.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_048.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_049.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_050.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_051.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_052.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_053.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_054.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_055.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_056.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_057.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_058.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_059.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_060.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_061.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_062.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_063.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_064.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_065.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_066.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_067.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_068.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_069.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_070.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_071.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_072.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_073.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_074.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_075.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_076.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_077.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_078.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_079.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_080.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_081.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_082.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_083.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_084.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_085.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_086.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_087.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_088.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_089.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_090.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_091.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_092.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_093.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_094.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_095.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_096.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_097.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_098.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_099.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_100.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_101.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_102.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_103.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_104.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_105.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_106.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_107.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_108.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_109.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_110.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_111.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_112.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_113.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_114.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_115.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_116.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_117.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_118.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_119.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_120.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_121.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_122.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_123.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_124.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_125.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_126.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_127.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_128.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_129.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_130.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_131.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_132.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_133.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_134.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_135.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_136.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_137.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_138.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_139.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_140.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_141.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_142.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_143.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_144.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_145.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_146.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_147.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_148.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_149.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_150.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_151.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_152.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_153.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_154.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_155.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_156.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_157.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_158.jpg
+https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_159.jpg
+  `;
+        return data.split("\n")[index];
+    }
+
+    const frameCount = 160;
+
+    const images = [];
+    const imageSeq = {
+        frame: 1,
+    };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = files(i);
+        images.push(img);
+    }
+
+    gsap.to(imageSeq, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: `none`,
+        scrollTrigger: {
+            scrub: .5,
+            trigger: `.movement-section`,
+            start: `top top`,
+            end: `250% top`,
+            scroller: `.main`,
+        },
+        onUpdate: render,
+    });
+
+    images[1].onload = render;
+
+    function render() {
+        scaleImage(images[imageSeq.frame], context);
+    }
+
+    function scaleImage(img, ctx) {
+        var canvas = ctx.canvas;
+        var hRatio = canvas.width / img.width;
+        var vRatio = canvas.height / img.height;
+        var ratio = Math.max(hRatio, vRatio);
+        var centerShift_x = (canvas.width - img.width * ratio) / 2;
+        var centerShift_y = (canvas.height - img.height * ratio) / 2;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            img.width,
+            img.height,
+            centerShift_x,
+            centerShift_y,
+            img.width * ratio,
+            img.height * ratio
+        );
+    }
+    ScrollTrigger.create({
+
+        trigger: ".movement-section",
+        pin: true,
+        scroller: `.main`,
+        start: `top top`,
+        end: `250% top`,
+
+    });
+}
+canvas2()
+
+
+
+
+
+gsap.fromTo(".movement-text-title", {
+    scale: 0
+}, {
+    scale: 1,
+    ease: "power3.inOut",
+    scrollTrigger: {
+        trigger: ".movement-section",
+        markers: false,
+        start: "top top",
+        end: "bottom top",
+        scroller: ".main",
+        scrub: true
+    }
+})
+
+let movementData = [
+    {
+        title: "mechanical",
+        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+    }, {
+        title: "smart",
+        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+    }, {
+        title: "chornograph",
+        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+    }
+]
+document.querySelectorAll('.product-circle').forEach((circle, index) => {
+    circle.addEventListener('click', function () {
+        const newColor = this.getAttribute('data-color');
+        const dataIndex = index;
+        const { title, desc } = movementData[dataIndex];
+
+        // Animate the innerCircle
+        gsap.to('.innerCircle', {
+            duration: 2,  // Duration of the animation
+            rotation: '+=360',  // Rotate 360 degrees
+            backgroundColor: newColor  // Change background color
+        });
+
+        // Animate the movement-type-description
+        const descriptionDiv = document.querySelector('.movement-type-description');
+        gsap.to(descriptionDiv, {
+            duration: 0.5,
+            width: 0,
+            onComplete: function () {
+                descriptionDiv.querySelector('.movement-type-title').textContent = title;
+                descriptionDiv.querySelector('.movement-type-desc').textContent = desc;
+                gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
+            }
+        });
+    });
+});
+
+function modelCanvas() {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas2'),
+        alpha: true
+     });
+
+    renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+    document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+
+    cube.position.set(3, 0, 0);
+    scene.add(cube);
+
+    const loader = new GLTFLoader();
+    let currentModel = null;
+
+    const models = [
+        './assets/models/try.glb',
+        './assets/models/type3.glb',
+        './assets/models/type2.glb'
+    ];
+
+    function loadModel(url) {
+        if (currentModel) {
+            scene.remove(currentModel);
+        }
+        loader.load(url, (gltf) => {
+            currentModel = gltf.scene;
+            scene.add(currentModel);
+        }, undefined, (err) => {
+            console.error('Error loading model:', err);
+        });
+    }
+
+    // Initial model load
+    loadModel(models[0]);
+
+    camera.position.z = 5;
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    gsap.to("#canvas2", {
+        scrollTrigger: {
+            trigger: ".movement-type-section",
+            start: "top 35%",
+            end: "bottom 35%",
+            markers: false,
+            scroller: ".main",
+            toggleActions: "play none none reverse",
+            onEnter: () => gsap.to("#canvas2", { display: "block" }),
+            onLeave: () => gsap.to("#canvas2", { display: "none" }),
+            onEnterBack: () => gsap.to("#canvas2", { display: "block" }),
+            onLeaveBack: () => gsap.to("#canvas2", { display: "none" }),
+            onUpdate: (self) => {
+                const progress = self.progress;
+                const sectionRect = document.querySelector(".movement-type-section").getBoundingClientRect();
+                const canvasHeight = document.getElementById("canvas2").offsetHeight;
+                const topOffset = sectionRect.top + (sectionRect.height / 2) - (canvasHeight / 2);
+
+                gsap.set("#canvas2", { top: topOffset + progress * (sectionRect.height - canvasHeight) });
+            }
+        }
+    });
+
+    // Event listeners for product circles
+    document.querySelectorAll('.product-circle').forEach((circle) => {
+        circle.addEventListener('click', (event) => {
+            const index = event.target.getAttribute('data-index');
+            loadModel(models[index]);
+        });
+    });
+
+    // Adjust canvas size on window resize
+    window.addEventListener('resize', () => {
+        const width = window.innerWidth / 2;
+        const height = window.innerHeight / 2;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    });
+}
+
+modelCanvas();
+
+
+
+//product type
