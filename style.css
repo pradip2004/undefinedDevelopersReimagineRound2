@@ -31,9 +31,6 @@ body {
 }
 
 /* theme  */
-.main[theme="black"] {
-      background-color: #000000;
-}
 
 .main[theme="white"] {
       background-color: #ffffff;
@@ -110,11 +107,29 @@ canvas {
 
 
 .new-arrival-background {
-      background: rgb(250, 186, 74);
+      background: #3b3b3b;
       background: linear-gradient(0deg,
                   #3b3b3b 0%,
                   rgba(256, 176, 69, 0) 100%);
+      transition: background-color 0.5s;
 }
+.movement-type-section{
+      background-color: #FF5733;
+      transition: background-color 0.5s;
+}
+.movement-type-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 100%; /* Start off-screen to the right */
+      width: 100%;
+      height: 100%;
+      background-color: #FF5733;
+      transition: right 2s ease-in-out;
+  }
+
+
+
 .new-arrival-title{
       -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
       mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
@@ -155,12 +170,21 @@ canvas {
 
     #canvas2{
       position: absolute;
-      top: 60%;
+      top: 0;
       right: 0;
-      transform: translateY(-50%);
+      /* transform: translateY(-50%); */
       width: 50%;
       height: auto;
-      display: none;
+      opacity: 0;
+      /* display: none; */
       /* background-color: red; */
     }
+    .product-type-title h1{
+      transition: opacity 0.5s ease-in-out;
+    }
+    .product-type-title:hover h1{
+      opacity: 1;
+    }
+
+    
   

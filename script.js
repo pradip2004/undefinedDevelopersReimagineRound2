@@ -8,6 +8,9 @@ import VanillaTilt from 'vanilla-tilt';
 import * as dat from 'dat.gui';
 import { Draggable } from 'gsap/all';
 import InertiaPlugin from 'gsap/all';
+import watch1 from "./assets/models/try.glb"
+import watch2 from "./assets/models/type3.glb"
+import watch3 from "./assets/models/type2.glb"
 
 
 
@@ -279,6 +282,7 @@ const bgColors = [
     "#754488"
 ]
 
+
 const bgColorElement = document.querySelector(".new-arrival-background");
 gsap.registerPlugin(ScrollTrigger);
 gsap.utils.toArray(".item").forEach((item, index) => {
@@ -298,7 +302,7 @@ gsap.utils.toArray(".item").forEach((item, index) => {
             end: "bottom top",
             scrub: true,
             onEnter: () => updateArrivalBg(bgColors[index]),
-            onEnterBack: () => updateArrivalBg(bgColors[index]),
+            onEnterBack: () => updateArrivalBg(bgColors[index]),  
         }
     })
 })
@@ -310,6 +314,7 @@ function updateArrivalBg(color) {
         ease: "power1.out"
     })
 }
+
 
 
 //marquee
@@ -394,25 +399,25 @@ gsap.utils.toArray(".brand").forEach((el) => {
     });
 });
 
+// brand section background change 
 
-
-gsap.fromTo(".main", {
-    background: "transparent",
-}, {
+gsap.to(".new-arrival-background", {
     background: "#3b3b3b",
-    duration: 1,
-    ease: "power2.out",
+    duration: 1.5,
+    ease: "ease.in",
     scrollTrigger: {
         trigger: ".brands-section",
         scroller: ".main",
         markers: false,
-        start: "top 90%",
-        end: "top 50%",
+        start: "top 50%",
+        end: "bottom 50%",
         scrub: true,
     }
 })
 
-//canvas animation
+
+
+//2d canvas animation
 
 function canvas2() {
     const canvas = document.querySelector("#movement-section-canvas>canvas");
@@ -661,7 +666,7 @@ canvas2()
 
 
 
-
+//movement setion text and background change
 
 gsap.fromTo(".movement-text-title", {
     scale: 0
@@ -678,94 +683,75 @@ gsap.fromTo(".movement-text-title", {
     }
 })
 
-let movementData = [
-    {
-        title: "mechanical",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
-    }, {
-        title: "smart",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
-    }, {
-        title: "chornograph",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
-    }
-]
-document.querySelectorAll('.product-circle').forEach((circle, index) => {
-    circle.addEventListener('click', function () {
-        const newColor = this.getAttribute('data-color');
-        const dataIndex = index;
-        const { title, desc } = movementData[dataIndex];
 
-        // Animate the innerCircle
-        gsap.to('.innerCircle', {
-            duration: 2,  // Duration of the animation
-            rotation: '+=360',  // Rotate 360 degrees
-            backgroundColor: newColor  // Change background color
-        });
-
-        // Animate the movement-type-description
-        const descriptionDiv = document.querySelector('.movement-type-description');
-        gsap.to(descriptionDiv, {
-            duration: 0.5,
-            width: 0,
-            onComplete: function () {
-                descriptionDiv.querySelector('.movement-type-title').textContent = title;
-                descriptionDiv.querySelector('.movement-type-desc').textContent = desc;
-                gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
-            }
-        });
-    });
-});
+//movement section canvas change
 
 function modelCanvas() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas2'),
+    const renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('canvas2'),
         alpha: true
-     });
+    });
 
-    renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+    renderer.setSize(window.innerWidth / 2, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-
-    cube.position.set(3, 0, 0);
-    scene.add(cube);
-
     const loader = new GLTFLoader();
-    let currentModel = null;
+    let models = [];
+    let centralPoint = new THREE.Object3D();
+    scene.add(centralPoint);
+    centralPoint.position.set(2, -10, 0);
+    centralPoint.rotateZ(Math.PI / 2)
 
-    const models = [
-        './assets/models/try.glb',
-        './assets/models/type3.glb',
-        './assets/models/type2.glb'
+    const modelData = [
+        { url: watch1, scale: 1.5, rotateZ: (Math.PI/2) },
+        { url: watch2, scale: 50, rotateZ: (Math.PI/4) },
+        { url: watch3, scale: 7, rotateZ: (Math.PI/2) }
     ];
 
-    function loadModel(url) {
-        if (currentModel) {
-            scene.remove(currentModel);
-        }
-        loader.load(url, (gltf) => {
-            currentModel = gltf.scene;
-            scene.add(currentModel);
-        }, undefined, (err) => {
-            console.error('Error loading model:', err);
+    function loadModels() {
+        const radius = 10;
+        const angleIncrement = 120 * (Math.PI / 180); 
+
+        modelData.forEach((data, index) => {
+            loader.load(data.url, (gltf) => {
+                let model = gltf.scene;
+                model.scale.set(data.scale, data.scale, data.scale);
+                const angle = index * angleIncrement;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                model.position.set(x, y, 0);
+                model.rotation.z = data.rotateZ;
+                centralPoint.add(model);
+                animateModel(model);
+                models.push({ model, index });
+            }, undefined, (err) => {
+                console.error('Error loading model:', err);
+            });
         });
     }
 
-    // Initial model load
-    loadModel(models[0]);
+    function animateModel(model) {
+        gsap.timeline({ repeat: -1, yoyo: true })
+            .to(model.rotation, { x: -Math.PI/8, duration: 3, ease: "power1.inOut" })
+            // .to(model.rotation, { y: 0, duration: 2, ease: "power1.inOut" })
+            .to(model.rotation, { x: Math.PI/8, duration: 3, ease: "power1.inOut" })
+            .to(model.rotation, { x: -Math.PI/8, duration: 3, ease: "power1.inOut" })
+    }
+    loadModels();
+
+    const ambientLight = new THREE.AmbientLight(0xffffff); 
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+    directionalLight.position.set(5, 5, 5).normalize();
+    scene.add(directionalLight);
 
     camera.position.z = 5;
 
     function animate() {
         requestAnimationFrame(animate);
-
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-
         renderer.render(scene, camera);
     }
 
@@ -775,45 +761,220 @@ function modelCanvas() {
         scrollTrigger: {
             trigger: ".movement-type-section",
             start: "top 35%",
-            end: "bottom 35%",
+            end: "bottom 65%",
             markers: false,
             scroller: ".main",
             toggleActions: "play none none reverse",
-            onEnter: () => gsap.to("#canvas2", { display: "block" }),
-            onLeave: () => gsap.to("#canvas2", { display: "none" }),
-            onEnterBack: () => gsap.to("#canvas2", { display: "block" }),
-            onLeaveBack: () => gsap.to("#canvas2", { display: "none" }),
-            onUpdate: (self) => {
-                const progress = self.progress;
-                const sectionRect = document.querySelector(".movement-type-section").getBoundingClientRect();
-                const canvasHeight = document.getElementById("canvas2").offsetHeight;
-                const topOffset = sectionRect.top + (sectionRect.height / 2) - (canvasHeight / 2);
-
-                gsap.set("#canvas2", { top: topOffset + progress * (sectionRect.height - canvasHeight) });
-            }
+            onEnter: () => gsap.to("#canvas2", { opacity: 1 }),
+            onLeave: () => gsap.to("#canvas2", { opacity: 0 }),
+            onEnterBack: () => gsap.to("#canvas2", { opacity: 1 }),
+            onLeaveBack: () => gsap.to("#canvas2", { opacity: 0 }),
         }
     });
 
-    // Event listeners for product circles
+    let activeIndex = 0;
+
+    function rotateCentralPoint(newIndex) {
+        const angle = (newIndex - activeIndex) * 120;
+        gsap.to(centralPoint.rotation, {
+            z: centralPoint.rotation.z + THREE.MathUtils.degToRad(angle),
+            duration: 1,
+            ease: "power2.inOut"
+        });
+        activeIndex = newIndex;
+    }
+
     document.querySelectorAll('.product-circle').forEach((circle) => {
         circle.addEventListener('click', (event) => {
-            const index = event.target.getAttribute('data-index');
-            loadModel(models[index]);
+            const newIndex = parseInt(event.target.getAttribute('data-index'));
+            if (newIndex !== activeIndex) {
+                document.querySelector('.active-circle').classList.remove('active-circle');
+                event.target.classList.add('active-circle');
+                rotateCentralPoint(newIndex);
+            }
         });
     });
 
-    // Adjust canvas size on window resize
     window.addEventListener('resize', () => {
         const width = window.innerWidth / 2;
-        const height = window.innerHeight / 2;
+        const height = window.innerHeight;
         renderer.setSize(width, height);
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
     });
 }
 
-modelCanvas();
+function onClickMovementSetionBgChange(){
+    let movementData = [
+        {
+            title: "mechanical",
+            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+        },{
+            title: "chornograph",
+            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+        },
+        {
+            title: "smart",
+            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
+        }
+    ]
+    document.querySelectorAll('.product-circle').forEach((circle, index) => {
+        circle.addEventListener('click', function () {
+            const newColor = this.getAttribute('data-color');
+            const dataIndex = index;
+            const { title, desc } = movementData[dataIndex];
+    
+            // gsap.to('.innerCircle', {
+            //     duration: 2,  
+            //     rotation: '+=360',  
+            //     backgroundColor: newColor  
+            // });
+    
+            const descriptionDiv = document.querySelector('.movement-type-description');
+            gsap.to(descriptionDiv, {
+                duration: 0.5,
+                width: 0,
+                onComplete: function () {
+                    descriptionDiv.querySelector('.movement-type-title').textContent = title;
+                    descriptionDiv.querySelector('.movement-type-desc').textContent = desc;
+                    gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
+                }
+            });
+            const bgDiv = document.querySelector('.movement-type-section');
+            const before = bgDiv.querySelector('::before');
+    
+            bgDiv.style.setProperty('--before-bg-color', newColor);
+            bgDiv.style.setProperty('--before-right', '0'); // Move to the left
+    
+            setTimeout(() => {
+                bgDiv.style.backgroundColor = newColor; // Update the final background color
+                bgDiv.style.setProperty('--before-right', '100%'); // Reset for next transition
+            }, 1000);
+        });
+    });
+}
+
+    
+    onClickMovementSetionBgChange();
+    modelCanvas();
+
+//automatic run
+/*
+const circles = document.querySelectorAll('.product-circle');
+        let currentIndex = 0;
+        let autoClickInterval;
+        function handleClick(index) {
+            automaticRunMovementSection();
+            currentIndex = index;
+            clearTimeout(autoClickInterval);
+            startAutoClick();
+        }
+        function startAutoClick() {
+            autoClickInterval = setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= circles.length) {
+                    currentIndex = 0;
+                }
+                circles[currentIndex].click();
+            }, 5000); // Adjust the interval time as needed
+        }
+
+        circles.forEach((circle, index) => {
+            circle.addEventListener('click', () => handleClick(index));
+        });
+
+        // Start automatic cycling when the page loads
+        startAutoClick();
+*/
+
+//product type section background change
+
+gsap.to(".new-arrival-background", {
+    scrollTrigger: {
+        trigger: ".product-type-section",
+        start: "top 35%",
+        end: "bottom 0%",
+        markers: false,
+        scroller: ".main",
+        onEnter: () => document.querySelector('.main').setAttribute('theme', 'white'),
+        onLeave: () => {
+            document.querySelector('.main').removeAttribute('theme')
+        },
+        onEnterBack: () => document.querySelector('.main').setAttribute('theme', 'white'),
+        onLeaveBack: () => {
+            document.querySelector('.main').removeAttribute('theme')
+        },
+        scrub: true
+    },
+    background: "#ffffff",
+    duration: 1,
+    ease: "ease.in"
+});
+
+//product type section hover animation
+
+document.querySelectorAll(".product-type-title")
+    .forEach(function (member) {
+
+        member.addEventListener('mousemove', function (e) {
+            const img = this.querySelector(".product-type-img");
+            const windowWidth = window.innerWidth;
+            const centerX = windowWidth / 2;
+            const offsetX = e.clientX - centerX;
+            const rotationDegree = gsap.utils.mapRange(-centerX, centerX, -15, 15, offsetX); // Adjust rotation range as needed
+
+            gsap.to(img, {
+                opacity: 1,
+                x: gsap.utils.mapRange(0, windowWidth, -200, 200, e.clientX),
+                rotation: rotationDegree,
+                ease: "power4.out",
+                duration: 0.5
+            });
+        });
+
+        member.addEventListener('mouseleave', function () {
+            const img = this.querySelector(".product-type-img");
+            gsap.to(img, {
+                opacity: 0,
+                ease: "power4.out",
+                duration: 0.5
+            });
+        });
+        });
 
 
+//collection section
 
-//product type
+const collectionSectionAnimation = () => {
+    gsap.to(".slide", {
+        scrollTrigger: {
+            trigger: ".partner-section-container",
+            start: "top top",
+            end: "bottom bottom",
+            scroller: ".main",
+            markers: false,
+            scrub: 2
+        },
+        xPercent: -300,
+        ease: "power3.inOut"
+    })
+}
+
+collectionSectionAnimation()
+
+document.querySelector('.login-details-btn').addEventListener('mouseover',()=>{
+    gsap.to(".login-overlay",{
+          background: "transparent",
+          duration: 1,
+          ease: "expo.easeInOut"
+    })
+})
+
+document.querySelector('.login-details-btn').addEventListener('mouseleave',()=>{
+    gsap.to(".login-overlay",{
+          background: "#ffffff",
+          duration: 1,
+          ease: "expo.easeInOut"
+    })
+})
+
