@@ -402,7 +402,7 @@ gsap.utils.toArray(".brand").forEach((el) => {
 // brand section background change 
 
 gsap.to(".new-arrival-background", {
-    background: "#3b3b3b",
+    background: '#3b3b3b',
     duration: 1.5,
     ease: "ease.in",
     scrollTrigger: {
@@ -824,11 +824,11 @@ function onClickMovementSetionBgChange(){
             const dataIndex = index;
             const { title, desc } = movementData[dataIndex];
     
-            // gsap.to('.innerCircle', {
-            //     duration: 2,  
-            //     rotation: '+=360',  
-            //     backgroundColor: newColor  
-            // });
+            gsap.to('.innerCircle', {
+                duration: 2,  
+                rotation: '+=360',  
+                backgroundColor: newColor  
+            });
     
             const descriptionDiv = document.querySelector('.movement-type-description');
             gsap.to(descriptionDiv, {
@@ -840,23 +840,31 @@ function onClickMovementSetionBgChange(){
                     gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
                 }
             });
-            const bgDiv = document.querySelector('.movement-type-section');
-            const before = bgDiv.querySelector('::before');
+            
+            // const bgDiv = document.querySelector('.movement-type-section');
+            // const before = bgDiv.querySelector('::before');
     
-            bgDiv.style.setProperty('--before-bg-color', newColor);
-            bgDiv.style.setProperty('--before-right', '0'); // Move to the left
+            // bgDiv.style.setProperty('--before-bg-color', newColor);
+            // bgDiv.style.setProperty('--before-right', '0'); // Move to the left
     
-            setTimeout(() => {
-                bgDiv.style.backgroundColor = newColor; // Update the final background color
-                bgDiv.style.setProperty('--before-right', '100%'); // Reset for next transition
-            }, 1000);
+            // setTimeout(() => {
+            //     bgDiv.style.backgroundColor = newColor; // Update the final background color
+            //     bgDiv.style.setProperty('--before-right', '100%'); // Reset for next transition
+            // }, 1000);
+            
         });
     });
 }
 
+
+
+
     
     onClickMovementSetionBgChange();
     modelCanvas();
+
+onClickMovementSetionBgChange();
+modelCanvas();
 
 //automatic run
 /*
@@ -886,6 +894,29 @@ const circles = document.querySelectorAll('.product-circle');
         // Start automatic cycling when the page loads
         startAutoClick();
 */
+
+
+// type of products
+let typeProductData = [{name: "men",
+    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw3b1db283/images/Category%20Images/Men.jpg"
+}, {name: "women",
+    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw4a2a191a/images/header/titan_raga_h.jpg"
+}, {name: "smart watch",
+    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw869c9036/images/titantraveller_thumbnail.jpg"
+}, {name: "premium watches",
+    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw23da7056/images/Category%20Images/TItan-Edge.jpg"
+}, {name: "watches",
+    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dwcb076392/images/Category%20Images/Watches_mega.jpg"
+}]
+
+typeProductData.forEach((type)=>{
+    document.querySelector(".product-type-right").innerHTML += `<div class="product-type-title w-full flex justify-center relative">
+                              <h1 class="text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
+                              <div class="product-type-img opacity-0 w-36 h-44 bg-rose-400 absolute -left-[30%]">
+                                <img class="w-full h-full object-cover" src="${type.imgUrl}" alt="${type.name}">
+                              </div>
+                        </div>`
+})
 
 //product type section background change
 
@@ -977,4 +1008,34 @@ document.querySelector('.login-details-btn').addEventListener('mouseleave',()=>{
           ease: "expo.easeInOut"
     })
 })
+
+
+//footer section
+    let footerTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".footer-section",
+            scroller: ".main",
+            start: "top 80%",
+            end: "top 30%",
+            scrub: true,
+            markers: false,
+            
+        }
+    })
+    footerTimeline.from(".footer-heading > span", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: 0.2,
+        
+    })
+
+    footerTimeline.from(".footer-section > img", {
+        y: 500,
+        opacity: 0,
+        duration: 1.5,
+        ease: "ease.in",
+        stagger: 0.2,
+    })
 
