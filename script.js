@@ -266,14 +266,37 @@ function menuOpenBtn() {
 menuOpenBtn()
 
 // product tilt effect 
+function productSection(){
+    VanillaTilt.init(document.querySelectorAll(".product-card"), {
+        max: 25,
+        speed: 400
+    });
+    gsap.registerPlugin(ScrollTrigger)
+    // product title animation 
+    let productTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".product-section",
+            scroller: ".main",
+            start: "top 70%",
+            end: "top 30%",
+            scrub: true,
+            markers: false,
+            
+        }
+    })
+    productTimeline.from(".product-heading > span", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "ease.in",
+        stagger: 0.2,
+        
+    })
+}
 
-VanillaTilt.init(document.querySelectorAll(".product-card"), {
-    max: 25,
-    speed: 400
-});
+productSection();
 
-
-//new arrival
+//new arrival section background change
 
 const bgColors = [
     "#faba4a",
@@ -317,7 +340,7 @@ function updateArrivalBg(color) {
 
 
 
-//marquee
+//marquee for new arrival section
 
 
 let tween = gsap.to(".marquee-part", {
@@ -1039,3 +1062,19 @@ document.querySelector('.login-details-btn').addEventListener('mouseleave',()=>{
         stagger: 0.2,
     })
 
+
+    //real time shown in hero section
+    function updateTime() {
+        const overlayDetails = document.getElementById('showTime');
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        overlayDetails.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+   
+    setInterval(updateTime, 1000);
+
+    
+    updateTime();

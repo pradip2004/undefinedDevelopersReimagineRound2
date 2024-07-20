@@ -85,8 +85,14 @@ canvas {
 .menu-item:hover h1 {
       opacity: 1;
 }
+.product-card {
+      transition: box-shadow 0.3s ease-in-out;
+  }
 
-.product-card:hover {
+  .product-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  }
+/* .product-card:hover {
       background-image: url('./assets/img/product-card-bg.png');
       background-size: cover;
 }
@@ -103,7 +109,7 @@ canvas {
       background: linear-gradient(to top, #000000, transparent);
       transform: translateY(100%);
       transition: transform 0.3s ease-in;
-}
+} */
 
 
 .new-arrival-background {
