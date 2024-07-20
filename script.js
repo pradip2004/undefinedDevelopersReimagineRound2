@@ -67,9 +67,16 @@ loader.load(watchURL.href, function (gltf) {
     t1.to(model.rotation, { duration: 2, x: 0, y: -0.7, z: 0, ease: 'power2.inOut' }, "a");
     t1.to(model.scale, { duration: 2, x: 2.5, y: 2.5, z: 2.5, ease: 'power2.inOut' }, "a");
 
-    t1.to(model.position, { duration: 2, x: 0.5, y: 0, z: 0, ease: 'power2.inOut' }, "b");
-    t1.to(model.rotation, { duration: 2, x: 0, y: 0, z: 0, ease: 'power2.inOut' }, "b");
-    t1.to(model.scale, { duration: 2, x: 1, y: 1, z: 1, ease: 'power2.inOut' }, "b");
+    
+    function setModelScaleAnimation(model) {
+        const targetScale = window.innerWidth < 764 ? 0.5 : 1;
+        t1.to(model.position, { duration: 2, x: window.innerWidth < 764 ? 0 : 0.5, y: 0, z: 0, ease: 'power2.inOut' }, "b");
+        t1.to(model.rotation, { duration: 2, x: 0, y: 0, z: 0, ease: 'power2.inOut' }, "b");
+        t1.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
+        
+    }
+    setModelScaleAnimation(model)
+    // t1.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
 
     //title animation
     t1.from(".hero-section > h1 > span", {
@@ -78,6 +85,19 @@ loader.load(watchURL.href, function (gltf) {
         duration: 2,
         stagger: 0.2
     }, "b")
+    //overlay animation
+    t1.from(".hero-section-overlay-1", {
+        y: 100,
+        opacity: 0,
+        duration: 2,
+        ease: "expo.in"
+    }, "c")
+    t1.from(".hero-section-overlay-2", {
+        y: -100,
+        opacity: 0,
+        duration: 2,
+        ease: "expo.in"
+    }, "c")
     gsap.registerPlugin(ScrollTrigger);
     let t2 = gsap.timeline({
         scrollTrigger: {
@@ -161,6 +181,7 @@ renderer.setAnimationLoop(animate);
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix()
+    setModelScaleAnimation(model)
     renderer.setSize(window.innerWidth, window.innerHeight);
 })
 
@@ -266,7 +287,7 @@ function menuOpenBtn() {
 menuOpenBtn()
 
 // product tilt effect 
-function productSection(){
+function productSection() {
     VanillaTilt.init(document.querySelectorAll(".product-card"), {
         max: 25,
         speed: 400
@@ -281,7 +302,7 @@ function productSection(){
             end: "top 30%",
             scrub: true,
             markers: false,
-            
+
         }
     })
     productTimeline.from(".product-heading > span", {
@@ -290,153 +311,160 @@ function productSection(){
         duration: 1,
         ease: "ease.in",
         stagger: 0.2,
-        
+
     })
 }
 
 productSection();
 
 //new arrival section background change
+function newArrivalSection() {
+    const bgColors = [
+        "#faba4a",
+        "#0D1317",
+        "#E7B592",
+        "#754488"
+    ]
 
-const bgColors = [
-    "#faba4a",
-    "#0D1317",
-    "#E7B592",
-    "#754488"
-]
+    const bgColorElement = document.querySelector(".new-arrival-background");
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray(".item").forEach((item, index) => {
+        let img = item.querySelector(".item-img img");
 
-
-const bgColorElement = document.querySelector(".new-arrival-background");
-gsap.registerPlugin(ScrollTrigger);
-gsap.utils.toArray(".item").forEach((item, index) => {
-    let img = item.querySelector(".item-img img");
-
-    gsap.fromTo(img, {
-        scale: 1.25
-    }, {
-        scale: 1,
-        duration: 0.5,
-        ease: "power1.out",
-        scrollTrigger: {
-            trigger: item,
-            scroller: ".main",
-            markers: false,
-            start: "center bottom",
-            end: "bottom top",
-            scrub: true,
-            onEnter: () => updateArrivalBg(bgColors[index]),
-            onEnterBack: () => updateArrivalBg(bgColors[index]),  
-        }
+        gsap.fromTo(img, {
+            scale: 1.25
+        }, {
+            scale: 1,
+            duration: 0.5,
+            ease: "power1.out",
+            scrollTrigger: {
+                trigger: item,
+                scroller: ".main",
+                markers: false,
+                start: "center bottom",
+                end: "bottom top",
+                scrub: true,
+                onEnter: () => updateArrivalBg(bgColors[index]),
+                onEnterBack: () => updateArrivalBg(bgColors[index]),
+            }
+        })
     })
-})
 
-function updateArrivalBg(color) {
-    gsap.to(bgColorElement, {
-        background: `linear-gradient(0deg, ${color} 0%, rgba(252, 176, 69, 0) 100%)`,
-        duration: 1,
-        ease: "power1.out"
-    })
+    function updateArrivalBg(color) {
+        gsap.to(bgColorElement, {
+            background: `linear-gradient(0deg, ${color} 0%, rgba(252, 176, 69, 0) 100%)`,
+            duration: 1,
+            ease: "power1.out"
+        })
+    }
+
+
+
+    //marquee for new arrival section
+
+
+    let tween = gsap.to(".marquee-part", {
+        xPercent: -100,
+        repeat: -1,
+        duration: 5,
+        ease: "linear",
+    }).totalProgress(0.5);
+
+    gsap.set(".marquee-inner", { xPercent: -50 })
 }
 
-
-
-//marquee for new arrival section
-
-
-let tween = gsap.to(".marquee-part", {
-    xPercent: -100,
-    repeat: -1,
-    duration: 5,
-    ease: "linear",
-}).totalProgress(0.5);
-
-gsap.set(".marquee-inner", { xPercent: -50 })
+newArrivalSection();
 
 
 //brand animation
-gsap.registerPlugin(Draggable, InertiaPlugin);
-function animateElement(el) {
-    gsap.to(el, {
-        y: "+=20",  // move up 20px
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
-}
-let randomColors = [
-    "#dbfe87",
-    "#ffe381",
-    "#ed254e",
-    "#d4f5f5",
-    "#aafcb8",
-    "#e16f7c",
-    "#ddf8e8",
-    "#fff07c",
-    "#fe938c",
-    "#f4442e",
-    "#04e762",
-    "#f5b700",
-    "#004346",
-    "#75dddd",
-    "#f5b0cb",
-    "#d05353",
-    "#b10f2e",
-    "#73fbd3",
-]
-
-gsap.utils.toArray(".brand").forEach((el) => {
-    animateElement(el);
-    el.addEventListener("mouseover", () => {
-        const randomIndex = Math.floor(Math.random() * randomColors.length);
-        const randomColor = randomColors[randomIndex];
-        el.style.borderColor = randomColor;
-        el.setAttribute("data-currentColor", randomColor);
-    });
-    el.addEventListener("click", () => {
-
-    })
-    el.addEventListener("mouseout", () => {
-        el.style.borderColor = "white";
-    });
-
-    el.addEventListener("click", () => {
-        const currentColor = el.getAttribute("data-currentColor");
-        if (currentColor) {
-            el.style.backgroundColor = currentColor;
-            setTimeout(() => {
-                // el.style.backgroundColor = "transparent";
-                gsap.to(el, {
-                    backgroundColor: "transparent",
-                    duration: 1,
-                    ease: "power1.out",
-                    onComplete: () => animateElement(el)
-                })
-            }, 2000);
-        }
-    });
-    Draggable.create(el, {
-        bounds: ".brands",
-        inertia: true,
-        onDragEnd: () => animateElement(el)
-    });
-});
-
-// brand section background change 
-
-gsap.to(".new-arrival-background", {
-    background: '#3b3b3b',
-    duration: 1.5,
-    ease: "ease.in",
-    scrollTrigger: {
-        trigger: ".brands-section",
-        scroller: ".main",
-        markers: false,
-        start: "top 50%",
-        end: "bottom 50%",
-        scrub: true,
+function brandSection() {
+    gsap.registerPlugin(Draggable, InertiaPlugin);
+    function animateElement(el) {
+        gsap.to(el, {
+            y: "+=20",  // move up 20px
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
     }
-})
+    let randomColors = [
+        "#dbfe87",
+        "#ffe381",
+        "#ed254e",
+        "#d4f5f5",
+        "#aafcb8",
+        "#e16f7c",
+        "#ddf8e8",
+        "#fff07c",
+        "#fe938c",
+        "#f4442e",
+        "#04e762",
+        "#f5b700",
+        "#004346",
+        "#75dddd",
+        "#f5b0cb",
+        "#d05353",
+        "#b10f2e",
+        "#73fbd3",
+    ]
+
+    gsap.utils.toArray(".brand").forEach((el) => {
+        animateElement(el);
+        el.addEventListener("mouseover", () => {
+            const randomIndex = Math.floor(Math.random() * randomColors.length);
+            const randomColor = randomColors[randomIndex];
+            el.style.borderColor = randomColor;
+            el.setAttribute("data-currentColor", randomColor);
+        });
+        el.addEventListener("click", () => {
+
+        })
+        el.addEventListener("mouseout", () => {
+            el.style.borderColor = "white";
+        });
+
+        el.addEventListener("click", () => {
+            const currentColor = el.getAttribute("data-currentColor");
+            if (currentColor) {
+                el.style.backgroundColor = currentColor;
+                setTimeout(() => {
+                    // el.style.backgroundColor = "transparent";
+                    gsap.to(el, {
+                        backgroundColor: "transparent",
+                        duration: 1,
+                        ease: "power1.out",
+                        onComplete: () => animateElement(el)
+                    })
+                }, 2000);
+            }
+        });
+        Draggable.create(el, {
+            bounds: ".brands",
+            inertia: true,
+            onDragEnd: () => animateElement(el)
+        });
+    });
+
+    // brand section background change 
+
+    gsap.to(".new-arrival-background", {
+        background: '#3b3b3b',
+        duration: 1.5,
+        ease: "ease.in",
+        scrollTrigger: {
+            trigger: ".brands-section",
+            scroller: ".main",
+            markers: false,
+            start: "top 50%",
+            end: "bottom 50%",
+            scrub: true,
+        }
+    })
+
+}
+
+brandSection();
 
 
 
@@ -688,7 +716,6 @@ https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_159.jpg
 canvas2()
 
 
-
 //movement setion text and background change
 
 gsap.fromTo(".movement-text-title", {
@@ -728,14 +755,14 @@ function modelCanvas() {
     centralPoint.rotateZ(Math.PI / 2)
 
     const modelData = [
-        { url: watch1, scale: 1.3, rotateZ: (Math.PI/2) },
-        { url: watch2, scale: 50, rotateZ: (Math.PI/4) },
-        { url: watch3, scale: 7, rotateZ: (Math.PI/2) }
+        { url: watch1, scale: 1.3, rotateZ: (Math.PI / 2) },
+        { url: watch2, scale: 50, rotateZ: (Math.PI / 4) },
+        { url: watch3, scale: 7, rotateZ: (Math.PI / 2) }
     ];
 
     function loadModels() {
         const radius = 10;
-        const angleIncrement = 120 * (Math.PI / 180); 
+        const angleIncrement = 120 * (Math.PI / 180);
 
         modelData.forEach((data, index) => {
             loader.load(data.url, (gltf) => {
@@ -757,14 +784,14 @@ function modelCanvas() {
 
     function animateModel(model) {
         gsap.timeline({ repeat: -1, yoyo: true })
-            .to(model.rotation, { x: -Math.PI/8, duration: 3, ease: "power1.inOut" })
+            .to(model.rotation, { x: -Math.PI / 8, duration: 3, ease: "power1.inOut" })
             // .to(model.rotation, { y: 0, duration: 2, ease: "power1.inOut" })
-            .to(model.rotation, { x: Math.PI/8, duration: 3, ease: "power1.inOut" })
-            .to(model.rotation, { x: -Math.PI/8, duration: 3, ease: "power1.inOut" })
+            .to(model.rotation, { x: Math.PI / 8, duration: 3, ease: "power1.inOut" })
+            .to(model.rotation, { x: -Math.PI / 8, duration: 3, ease: "power1.inOut" })
     }
     loadModels();
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 7); 
+    const ambientLight = new THREE.AmbientLight(0xffffff, 7);
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
@@ -827,12 +854,12 @@ function modelCanvas() {
     });
 }
 
-function onClickMovementSetionBgChange(){
+function onClickMovementSetionBgChange() {
     let movementData = [
         {
             title: "mechanical",
             desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
-        },{
+        }, {
             title: "chornograph",
             desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, hic?"
         },
@@ -846,13 +873,13 @@ function onClickMovementSetionBgChange(){
             const newColor = this.getAttribute('data-color');
             const dataIndex = index;
             const { title, desc } = movementData[dataIndex];
-    
+
             gsap.to('.innerCircle', {
-                duration: 2,  
-                rotation: '+=360',  
-                backgroundColor: newColor  
+                duration: 2,
+                rotation: '+=360',
+                backgroundColor: newColor
             });
-    
+
             const descriptionDiv = document.querySelector('.movement-type-description');
             gsap.to(descriptionDiv, {
                 duration: 0.5,
@@ -863,31 +890,29 @@ function onClickMovementSetionBgChange(){
                     gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
                 }
             });
-            
+
             // const bgDiv = document.querySelector('.movement-type-section');
             // const before = bgDiv.querySelector('::before');
-    
+
             // bgDiv.style.setProperty('--before-bg-color', newColor);
             // bgDiv.style.setProperty('--before-right', '0'); // Move to the left
-    
+
             // setTimeout(() => {
             //     bgDiv.style.backgroundColor = newColor; // Update the final background color
             //     bgDiv.style.setProperty('--before-right', '100%'); // Reset for next transition
             // }, 1000);
-            
+
         });
     });
 }
 
 
-
-
-    
-    onClickMovementSetionBgChange();
-    modelCanvas();
-
 onClickMovementSetionBgChange();
 modelCanvas();
+
+
+
+
 
 //automatic run
 /*
@@ -907,7 +932,7 @@ const circles = document.querySelectorAll('.product-circle');
                     currentIndex = 0;
                 }
                 circles[currentIndex].click();
-            }, 5000); // Adjust the interval time as needed
+            }, 10000); // Adjust the interval time as needed
         }
 
         circles.forEach((circle, index) => {
@@ -920,161 +945,172 @@ const circles = document.querySelectorAll('.product-circle');
 
 
 // type of products
-let typeProductData = [{name: "men",
-    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw3b1db283/images/Category%20Images/Men.jpg"
-}, {name: "women",
-    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw4a2a191a/images/header/titan_raga_h.jpg"
-}, {name: "smart watch",
-    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw869c9036/images/titantraveller_thumbnail.jpg"
-}, {name: "premium watches",
-    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw23da7056/images/Category%20Images/TItan-Edge.jpg"
-}, {name: "watches",
-    imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dwcb076392/images/Category%20Images/Watches_mega.jpg"
-}]
-
-typeProductData.forEach((type)=>{
-    document.querySelector(".product-type-right").innerHTML += `<div class="product-type-title w-full flex justify-center relative">
-                              <h1 class="text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
-                              <div class="product-type-img opacity-0 w-36 h-44 bg-rose-400 absolute -left-[30%]">
-                                <img class="w-full h-full object-cover" src="${type.imgUrl}" alt="${type.name}">
-                              </div>
-                        </div>`
-})
-
-//product type section background change
-
-gsap.to(".new-arrival-background", {
-    scrollTrigger: {
-        trigger: ".product-type-section",
-        start: "top 35%",
-        end: "bottom 0%",
-        markers: false,
-        scroller: ".main",
-        onEnter: () => document.querySelector('.main').setAttribute('theme', 'white'),
-        onLeave: () => {
-            document.querySelector('.main').removeAttribute('theme')
-        },
-        onEnterBack: () => document.querySelector('.main').setAttribute('theme', 'white'),
-        onLeaveBack: () => {
-            document.querySelector('.main').removeAttribute('theme')
-        },
-        scrub: true
-    },
-    background: "#ffffff",
-    duration: 1,
-    ease: "ease.in"
-});
-
-//product type section hover animation
-
-document.querySelectorAll(".product-type-title")
-    .forEach(function (member) {
-
-        member.addEventListener('mousemove', function (e) {
-            const img = this.querySelector(".product-type-img");
-            const windowWidth = window.innerWidth;
-            const centerX = windowWidth / 2;
-            const offsetX = e.clientX - centerX;
-            const rotationDegree = gsap.utils.mapRange(-centerX, centerX, -15, 15, offsetX); // Adjust rotation range as needed
-
-            gsap.to(img, {
-                opacity: 1,
-                x: gsap.utils.mapRange(0, windowWidth, -200, 200, e.clientX),
-                rotation: rotationDegree,
-                ease: "power4.out",
-                duration: 0.5
-            });
-        });
-
-        member.addEventListener('mouseleave', function () {
-            const img = this.querySelector(".product-type-img");
-            gsap.to(img, {
-                opacity: 0,
-                ease: "power4.out",
-                duration: 0.5
-            });
-        });
-        });
-
-
-//collection section
-
-const collectionSectionAnimation = () => {
-    gsap.to(".slide", {
-        scrollTrigger: {
-            trigger: ".partner-section-container",
-            start: "top top",
-            end: "bottom bottom",
-            scroller: ".main",
-            markers: false,
-            scrub: 2
-        },
-        xPercent: -300,
-        ease: "power3.inOut"
+function typeOfProductsSection(){
+    let typeProductData = [{
+        name: "men",
+        imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw3b1db283/images/Category%20Images/Men.jpg"
+    }, {
+        name: "women",
+        imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw4a2a191a/images/header/titan_raga_h.jpg"
+    }, {
+        name: "smart watch",
+        imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw869c9036/images/titantraveller_thumbnail.jpg"
+    }, {
+        name: "premium watches",
+        imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw23da7056/images/Category%20Images/TItan-Edge.jpg"
+    }, {
+        name: "watches",
+        imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dwcb076392/images/Category%20Images/Watches_mega.jpg"
+    }]
+    
+    typeProductData.forEach((type) => {
+        document.querySelector(".product-type-right").innerHTML += `<div class="product-type-title w-full flex justify-center relative">
+                                  <h1 class="text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
+                                  <div class="product-type-img opacity-0 w-36 h-44 bg-rose-400 absolute -left-[30%]">
+                                    <img class="w-full h-full object-cover" src="${type.imgUrl}" alt="${type.name}">
+                                  </div>
+                            </div>`
     })
+    
+    //product type section background change
+    
+    gsap.to(".new-arrival-background", {
+        scrollTrigger: {
+            trigger: ".product-type-section",
+            start: "top 35%",
+            end: "bottom 0%",
+            markers: false,
+            scroller: ".main",
+            onEnter: () => document.querySelector('.main').setAttribute('theme', 'white'),
+            onLeave: () => {
+                document.querySelector('.main').removeAttribute('theme')
+            },
+            onEnterBack: () => document.querySelector('.main').setAttribute('theme', 'white'),
+            onLeaveBack: () => {
+                document.querySelector('.main').removeAttribute('theme')
+            },
+            scrub: true
+        },
+        background: "#ffffff",
+        duration: 1,
+        ease: "ease.in"
+    });
+    
+    //product type section hover animation
+    
+    document.querySelectorAll(".product-type-title")
+        .forEach(function (member) {
+    
+            member.addEventListener('mousemove', function (e) {
+                const img = this.querySelector(".product-type-img");
+                const windowWidth = window.innerWidth;
+                const centerX = windowWidth / 2;
+                const offsetX = e.clientX - centerX;
+                const rotationDegree = gsap.utils.mapRange(-centerX, centerX, -15, 15, offsetX); // Adjust rotation range as needed
+    
+                gsap.to(img, {
+                    opacity: 1,
+                    x: gsap.utils.mapRange(0, windowWidth, -200, 200, e.clientX),
+                    rotation: rotationDegree,
+                    ease: "power4.out",
+                    duration: 0.5
+                });
+            });
+    
+            member.addEventListener('mouseleave', function () {
+                const img = this.querySelector(".product-type-img");
+                gsap.to(img, {
+                    opacity: 0,
+                    ease: "power4.out",
+                    duration: 0.5
+                });
+            });
+        });
+    
 }
 
-collectionSectionAnimation()
+typeOfProductsSection();
 
-document.querySelector('.login-details-btn').addEventListener('mouseover',()=>{
-    gsap.to(".login-overlay",{
-          background: "transparent",
-          duration: 1,
-          ease: "expo.easeInOut"
+//collection section
+function collectionSection(){
+    const collectionSectionAnimation = () => {
+        gsap.to(".slide", {
+            scrollTrigger: {
+                trigger: ".partner-section-container",
+                start: "top top",
+                end: "bottom bottom",
+                scroller: ".main",
+                markers: false,
+                scrub: 2
+            },
+            xPercent: -300,
+            ease: "power3.inOut"
+        })
+    }
+    
+    collectionSectionAnimation()
+    
+    document.querySelector('.login-details-btn').addEventListener('mouseover', () => {
+        gsap.to(".login-overlay", {
+            background: "transparent",
+            duration: 1,
+            ease: "expo.easeInOut"
+        })
     })
-})
+    
+    document.querySelector('.login-details-btn').addEventListener('mouseleave', () => {
+        gsap.to(".login-overlay", {
+            background: "#ffffff",
+            duration: 1,
+            ease: "expo.easeInOut"
+        })
+    })
+    
+}
 
-document.querySelector('.login-details-btn').addEventListener('mouseleave',()=>{
-    gsap.to(".login-overlay",{
-          background: "#ffffff",
-          duration: 1,
-          ease: "expo.easeInOut"
-    })
-})
+collectionSection();
 
 
 //footer section
-    let footerTimeline = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".footer-section",
-            scroller: ".main",
-            start: "top 80%",
-            end: "top 30%",
-            scrub: true,
-            markers: false,
-            
-        }
-    })
-    footerTimeline.from(".footer-heading > span", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.inOut",
-        stagger: 0.2,
-        
-    })
+let footerTimeline = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".footer-section",
+        scroller: ".main",
+        start: "top 80%",
+        end: "top 30%",
+        scrub: true,
+        markers: false,
 
-    footerTimeline.from(".footer-section > img", {
-        y: 500,
-        opacity: 0,
-        duration: 1.5,
-        ease: "ease.in",
-        stagger: 0.2,
-    })
-
-
-    //real time shown in hero section
-    function updateTime() {
-        const overlayDetails = document.getElementById('showTime');
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        overlayDetails.textContent = `${hours}:${minutes}:${seconds}`;
     }
+})
+footerTimeline.from(".footer-heading > span", {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.inOut",
+    stagger: 0.2,
 
-   
-    setInterval(updateTime, 1000);
+})
 
-    
-    updateTime();
+footerTimeline.from(".footer-section > img", {
+    y: 500,
+    opacity: 0,
+    duration: 1.5,
+    ease: "ease.in",
+    stagger: 0.2,
+})
+
+
+//real time shown in hero section
+function updateTime() {
+    const overlayDetails = document.getElementById('showTime');
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    overlayDetails.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+setInterval(updateTime, 1000);
+
+updateTime();
