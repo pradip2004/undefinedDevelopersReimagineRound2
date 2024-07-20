@@ -134,7 +134,7 @@ canvas {
       -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
       mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
 }
-.new-arrival-title h1, .movement-text-title h1 {
+.new-arrival-title h1, .movement-text-title h1, .brand-heading {
       font-family: titleFont;
       text-transform: uppercase;
       -webkit-text-stroke: 2px #fff;
