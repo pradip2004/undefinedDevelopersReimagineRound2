@@ -705,7 +705,7 @@ function modelCanvas() {
     centralPoint.rotateZ(Math.PI / 2)
 
     const modelData = [
-        { url: watch1, scale: 1.5, rotateZ: (Math.PI/2) },
+        { url: watch1, scale: 1.3, rotateZ: (Math.PI/2) },
         { url: watch2, scale: 50, rotateZ: (Math.PI/4) },
         { url: watch3, scale: 7, rotateZ: (Math.PI/2) }
     ];
@@ -741,11 +741,11 @@ function modelCanvas() {
     }
     loadModels();
 
-    const ambientLight = new THREE.AmbientLight(0xffffff); 
+    const ambientLight = new THREE.AmbientLight(0xffffff, 7); 
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
-    directionalLight.position.set(5, 5, 5).normalize();
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight.position.set(5, 5, -3)
     scene.add(directionalLight);
 
     camera.position.z = 5;
