@@ -26,16 +26,16 @@ document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-// Add OrbitControls for better camera interaction
+
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
 
 camera.position.set(0, 0, 5)
 
-// Add ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 2); // Soft white light
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 2); 
 scene.add(ambientLight);
-//add directional light
+
 const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
 directionalLight.position.set(5, 5, 1)
 scene.add(directionalLight);
@@ -44,11 +44,17 @@ directionalLight.castShadow = true;
 const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
 // scene.add(dLightHelper)
 
-// Load the model
-const loader = new GLTFLoader();
-// const watchURL = new URL('./assets/models/apple_watch_series_7_-_free_watch-face_sdctm.glb', import.meta.url);
-const watchURL = new URL('./assets/models/try.glb', import.meta.url);
 
+const loader = new GLTFLoader();
+
+//!!important change this url
+const watchURL = new URL('./assets/models/try.glb', import.meta.url);
+let heroTimeline = gsap.timeline({
+    paused: true ,
+    onComplete: () => {
+        document.addEventListener('mousemove', onMouseMove);
+    }
+});
 loader.load(watchURL.href, function (gltf) {
     const model = gltf.scene;
     scene.add(model);
@@ -57,47 +63,48 @@ loader.load(watchURL.href, function (gltf) {
     model.position.set(0, -4, 0);
     model.rotation.set(-0.7, 0, 0);
 
-    let t1 = gsap.timeline({
-        onComplete: () => {
-            // Enable mouse move interaction after animation completes
-            document.addEventListener('mousemove', onMouseMove);
-        }
-    });
-    t1.to(model.position, { duration: 2, x: 2.5, y: -0.5, z: 0.8, ease: 'power2.inOut' }, "a");
-    t1.to(model.rotation, { duration: 2, x: 0, y: -0.7, z: 0, ease: 'power2.inOut' }, "a");
-    t1.to(model.scale, { duration: 2, x: 2.5, y: 2.5, z: 2.5, ease: 'power2.inOut' }, "a");
+    // let heroTimeline = gsap.timeline({
+    //     paused: true ,
+    //     onComplete: () => {
+    //         // Enable mouse move interaction after animation completes
+    //         document.addEventListener('mousemove', onMouseMove);
+    //     }
+    // });
+    heroTimeline.to(model.position, { duration: 2, x: 2.5, y: -0.5, z: 0.8, ease: 'power2.inOut' }, "a");
+    heroTimeline.to(model.rotation, { duration: 2, x: 0, y: -0.7, z: 0, ease: 'power2.inOut' }, "a");
+    heroTimeline.to(model.scale, { duration: 2, x: 2.5, y: 2.5, z: 2.5, ease: 'power2.inOut' }, "a");
 
     
     function setModelScaleAnimation(model) {
         const targetScale = window.innerWidth < 764 ? 0.5 : 1;
-        t1.to(model.position, { duration: 2, x: window.innerWidth < 764 ? 0 : 0.5, y: 0, z: 0, ease: 'power2.inOut' }, "b");
-        t1.to(model.rotation, { duration: 2, x: 0, y: 0, z: 0, ease: 'power2.inOut' }, "b");
-        t1.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
+        heroTimeline.to(model.position, { duration: 2, x: window.innerWidth < 764 ? 0 : 0.5, y: 0, z: 0, ease: 'power2.inOut' }, "b");
+        heroTimeline.to(model.rotation, { duration: 2, x: 0, y: 0, z: 0, ease: 'power2.inOut' }, "b");
+        heroTimeline.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
         
     }
     setModelScaleAnimation(model)
-    // t1.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
+    // heroTimeline.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
 
     //title animation
-    t1.from(".hero-section > h1 > span", {
+    heroTimeline.from(".hero-section > h1 > span", {
         y: 100,
         opacity: 0,
         duration: 2,
         stagger: 0.2
     }, "b")
     //overlay animation
-    t1.from(".hero-section-overlay-1", {
+    heroTimeline.from(".hero-section-overlay-1", {
         y: 100,
         opacity: 0,
-        duration: 2,
+        duration: 1.2,
         ease: "expo.in"
-    }, "c")
-    t1.from(".hero-section-overlay-2", {
+    }, "<0.5")
+    heroTimeline.from(".hero-section-overlay-2", {
         y: -100,
         opacity: 0,
-        duration: 2,
+        duration: 1.2,
         ease: "expo.in"
-    }, "c")
+    }, "<0.8")
     gsap.registerPlugin(ScrollTrigger);
     let t2 = gsap.timeline({
         scrollTrigger: {
@@ -741,7 +748,7 @@ function modelCanvas() {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
         canvas: document.getElementById('canvas2'),
-        alpha: true
+        alpha: false
     });
 
     renderer.setSize(window.innerWidth / 2, window.innerHeight);
@@ -1072,33 +1079,38 @@ collectionSection();
 
 
 //footer section
-let footerTimeline = gsap.timeline({
-    scrollTrigger: {
-        trigger: ".footer-section",
-        scroller: ".main",
-        start: "top 80%",
-        end: "top 30%",
-        scrub: true,
-        markers: false,
+function footerSection(){
+    let footerTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".footer-section",
+            scroller: ".main",
+            start: "top 80%",
+            end: "top 30%",
+            scrub: true,
+            markers: false,
+    
+        }
+    })
+    footerTimeline.from(".footer-heading > span", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: 0.2,
+    
+    })
+    
+    footerTimeline.from(".footer-section > img", {
+        y: 500,
+        opacity: 0,
+        duration: 1.5,
+        ease: "ease.in",
+        stagger: 0.2,
+    })
+    
+}
 
-    }
-})
-footerTimeline.from(".footer-heading > span", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.inOut",
-    stagger: 0.2,
-
-})
-
-footerTimeline.from(".footer-section > img", {
-    y: 500,
-    opacity: 0,
-    duration: 1.5,
-    ease: "ease.in",
-    stagger: 0.2,
-})
+footerSection();
 
 
 //real time shown in hero section
@@ -1114,3 +1126,145 @@ function updateTime() {
 setInterval(updateTime, 1000);
 
 updateTime();
+
+// small interaction 
+function applyMagneticEffect(element, power) {
+    element.addEventListener("mousemove", (event) => {
+        let x = event.offsetX;
+        let y = event.offsetY;
+        let itemWidth = element.clientWidth;
+        let itemHeight = element.clientHeight;
+        let moveX = (x - itemWidth / 2) * power;
+        let moveY = (y - itemHeight / 2) * power;
+        gsap.to(element, { x: moveX, y: moveY, duration: 0.3 });
+    });
+    element.addEventListener("mouseleave", () => {
+        gsap.to(element, { x: 0, y: 0, duration: 0.3 });
+    });
+}
+
+document.querySelectorAll('.menu-item h1').forEach((el)=>applyMagneticEffect(el, 0.1));
+document.querySelectorAll('.icon').forEach((el)=>applyMagneticEffect(el, 0.5));
+
+// navbar hover animation 
+document.querySelectorAll('.menu-wrapper').forEach(wrapper => {
+    let height = wrapper.offsetHeight;
+    wrapper.addEventListener('mouseenter', () => {
+        gsap.to(wrapper.querySelector('.menu-item'), { y: -height, duration: 0.5 });
+    });
+    
+    wrapper.addEventListener('mouseleave', () => {
+        gsap.to(wrapper.querySelector('.menu-item'), { y: 0, duration: 0.5 });
+    });
+});
+
+
+//try loading page
+function animateClock() {
+    const duration = 5; 
+    let loadingTimeline = 
+    gsap.to("#percentage", {
+        duration: duration,
+        innerText: 100,
+        ease: "power1.out",
+        snap: { innerText: 1 },
+        onUpdate: function () {
+            const element = document.getElementById("percentage");
+            element.innerText = Math.round(element.innerText) + '%';
+        },
+        onComplete: function () {
+            
+            gsap.to(".loading-screen", {
+                duration: 0.5,
+                clipPath: "circle(0% at 50% 50%)",
+                ease: "power4.in",
+                onComplete: function () {
+                    // document.querySelector(".loading-screen").style.display = "none";
+                    heroTimeline.play();
+                }
+            });
+        }
+    });
+
+    gsap.to(".minute-hand", {
+        rotation: 360,
+        duration: duration,
+        ease: "power1.out",
+        onComplete: function () {
+            gsap.killTweensOf(".hour-hand");
+        }
+    });
+
+    const textElement = document.querySelector("#shuffling-text");
+    const originalText = textElement.innerText;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    gsap.fromTo(textElement, 
+        { innerText: originalText }, 
+        {
+            duration: duration / 2,
+            ease: "none",
+            onUpdate: function () {
+                let randomText = '';
+                for (let i = 0; i < originalText.length; i++) {
+                    randomText += characters[Math.floor(Math.random() * characters.length)];
+                }
+                textElement.innerText = randomText;
+            },
+            onComplete: function () {
+                textElement.innerText = originalText;
+            }
+        }
+    );
+
+    /*
+    const textElement = document.querySelector("#shuffling-text");
+const originalText = textElement.innerText;
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// const duration = 5;
+const timeline = gsap.timeline();
+
+function shuffleCharacter(index) {
+    const char = originalText[index];
+    const randomText = characters[Math.floor(Math.random() * characters.length)];
+
+    // Create a temporary span element to hold the random character
+    const tempSpan = document.createElement("span");
+    tempSpan.innerText = randomText;
+    tempSpan.style.opacity = "1";
+
+    // Replace the original character with the span element
+    const currentText = textElement.innerText;
+    const newText = currentText.slice(0, index) + randomText + currentText.slice(index + 1);
+    textElement.innerHTML = newText;
+
+    gsap.fromTo(tempSpan, 
+        { innerText: randomText }, 
+        {
+            duration: (duration / originalText.length) / 2,
+            ease: "none",
+            onUpdate: function () {
+                tempSpan.innerText = characters[Math.floor(Math.random() * characters.length)];
+            },
+            onComplete: function () {
+                tempSpan.innerText = char;
+                textElement.innerHTML = currentText.slice(0, index) + char + currentText.slice(index + 1);
+            }
+        }
+    );
+}
+
+// Create a timeline to sequence the animations
+originalText.split('').forEach((char, index) => {
+    timeline.add(() => shuffleCharacter(index), index * (duration / originalText.length));
+});
+
+// Play the timeline
+timeline.play();
+*/
+}
+
+window.onload = function() {
+    animateClock();
+}
+
+

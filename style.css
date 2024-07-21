@@ -196,6 +196,9 @@ canvas {
       opacity: 1;
     }
 
+    .animate-on-hover span {
+      display: inline-block; 
+    }
     
   
     @keyframes scrolling {
@@ -209,3 +212,16 @@ canvas {
         transform: translateY(20px);
       }
     }
+
+
+    /* try loading page  */
+   
+
+
+ 
+   .loading-screen {
+      clip-path: circle(100% at 50% 50%);
+      transition: clip-path 1s ease-in-out;
+   }
+  
+

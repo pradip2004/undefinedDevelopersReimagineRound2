@@ -11,6 +11,21 @@
 </head>
 
 <body>
+      <div class="loading-screen fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center z-[1000]">
+
+            <div id="shuffling-text" class="shuffling-text text-3xl absolute opacity-40 text-gray-800 tracking-widest top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2">TITAN</div>
+            <div class="clock absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 border-2 border-gray-500 shadow-xl shadow-gray-500 rounded-full flex justify-center items-center">
+                  <div class="hand hour-hand absolute -translate-y-1/2  origin-bottom w-1 h-12 bg-gray-800 rounded-md"></div>
+
+                  <div class="hand minute-hand absolute -translate-y-1/2  origin-bottom bg-[#c48d36] rounded-md w-1 h-16"></div>
+
+                  <div class="center absolute top-1/2 left-1/2 w-2 h-2 bg-[#3b3b3b] -translate-x-1/2 -translate-y-1/2 rounded-full z-[1001]"></div>
+            </div>
+            
+            <div id="percentage" class="absolute text-5xl bottom-[5%] opacity-50 text-gray-800 font-light">0%</div>
+      </div>
+
+
       <section class="new-arrival-background fixed w-full h-full bg-[#3b3b3b] -z-10 "></section>
       <div theme="default" class="main ">
             <section class="navbar-upper-section h-[5em] w-full fixed z-40 px-9 md:px-24 py-6">
@@ -19,13 +34,13 @@
                         </div>
                         <div class="navbar-top-icons flex items-center justify-between w-[10em]">
                               <div class="icon text-2xl text-white">
-                                    <i class="ri-user-3-line"></i>
+                                    <i class=" ri-user-3-line"></i>
                               </div>
                               <div class="icon text-2xl text-white">
-                                    <i class="ri-heart-line"></i>
+                                    <i class=" ri-heart-line"></i>
                               </div>
                               <div class="icon text-2xl text-white">
-                                    <i class="ri-shopping-bag-4-line"></i>
+                                    <i class=" ri-shopping-bag-4-line"></i>
                               </div>
                         </div>
                   </div>
@@ -48,15 +63,32 @@
                         <img class="absolute bottom-0" src="./assets/img/navbar-shadow.png" alt="">
                   </div>
                   <div
-                        class="menu-items py-[5em] flex items-center justify-between flex-col h-full pt-[10em] absolute z-[32] w-full px-[7em]">
-                        <div class="menu-item border-b-4 border-[#c48d36] w-full flex items-center justify-center">
-                              <h1 class="text-9xl uppercase opacity-1 hover:opacity-1">Home</h1>
+                        class="menu-items py-[10em] sm:py-[5em] flex items-center justify-between flex-col h-full pt-[10em] absolute z-[32] w-full px-[2em] sm:px-[4em] lg:px-[7em]">
+                        <div
+                              class="menu-wrapper overflow-hidden h-16 sm:h-24 lg:h-32 w-full border-b-4 border-[#c48d36]">
+                              <div class="menu-item  w-full flex items-center justify-center flex-col">
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1  relative">Home</h1>
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1 relative">Home</h1>
+                              </div>
                         </div>
-                        <div class="menu-item border-b-4 border-[#c48d36] w-full flex items-center justify-center">
-                              <h1 class="text-9xl uppercase opacity-50 hover:opacity-1">product</h1>
+
+                        <div
+                              class="menu-wrapper overflow-hidden h-14 sm:h-24 lg:h-32 w-full border-b-4 border-[#c48d36]">
+                              <div class="menu-item  w-full flex items-center justify-center flex-col">
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1 hover:opacity-1">
+                                          product</h1>
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1 hover:opacity-1">
+                                          product</h1>
+                              </div>
                         </div>
-                        <div class="menu-item w-full flex items-center justify-center">
-                              <h1 class="text-9xl uppercase opacity-50 hover:opacity-1">collection</h1>
+                        <div
+                              class="menu-wrapper overflow-hidden h-14 sm:h-24 lg:h-32 w-full border-b-4 border-[#c48d36]">
+                              <div class="menu-item  w-full flex items-center justify-center flex-col">
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1 hover:opacity-1">
+                                          collection</h1>
+                                    <h1 class="text-6xl sm:text-8xl lg:text-9xl uppercase opacity-1 hover:opacity-1">
+                                          collection</h1>
+                              </div>
                         </div>
                   </div>
 
@@ -66,7 +98,8 @@
             <!-- hero section  -->
 
             <section class="hero-section w-full h-[100vh] bg-[#3b3b3b] relative flex items-center justify-center">
-                  <h1 class="uppercase text-[6em] sm:text-[7em] md:text-[12em] xl:text-[20em] text-white sm:tracking-tight tracking-wider lg:text-[15em]">
+                  <h1
+                        class="uppercase text-[6em] sm:text-[7em] md:text-[12em] xl:text-[20em] text-white sm:tracking-tight tracking-wider lg:text-[15em]">
                         <span class="inline-block tracking-tight leading-none">t</span>
                         <span class="inline-block tracking-tight leading-none">i</span>
                         <span class="inline-block tracking-tight leading-none">t</span>
@@ -91,20 +124,20 @@
                                     <p>Lorem ipsum dolor sit amet.</p>
                               </div>
                         </div>
-                        
+
                   </div>
                   <div
                         class="hero-section-overlay-2 backdrop-blur-sm absolute bottom-[25%] left-[5%] bg-gray-500/30 py-2 px-4 rounded-[50px] flex items-center justify-between text-white">
                         <div class="overlay-details w-44 h-24 overflow-hidden flex items-center justify-center">
                               <h1 id="showTime" class="text-4xl tracking-wide"></h1>
                         </div>
-                        
+
                   </div>
                   <div class="container_mouse absolute bottom-[8%] sm:bottom-[5%]">
                         <span class="mouse-btn w-10 h-20 border-2 border-white rounded-[30px] flex">
-                            <span class="mouse-scroll block w-4 h-4 bg-white rounded-full m-auto"></span>
+                              <span class="mouse-scroll block w-4 h-4 bg-white rounded-full m-auto"></span>
                         </span>
-                    </div>
+                  </div>
 
             </section>
 
@@ -113,7 +146,8 @@
             <section class="product-section w-full h-[200vh] md:h-[100vh] px-20 md:px-24 py-[4em] bg-[#3b3b3b]">
                   <div class="product-wrapper relative h-full w-full">
                         <div class="product-title absolute w-full h-1/2 z-[8] mt-36 sm:mt-40 md:m-0">
-                              <h1 class="product-heading flex text-[4rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[16rem] uppercase items-center justify-between text-white leading-none tracking-tighter sm:tracking-tight ">
+                              <h1
+                                    class="product-heading flex text-[4rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[16rem] uppercase items-center justify-between text-white leading-none tracking-tighter sm:tracking-tight ">
                                     <span class="inline-block">p</span>
                                     <span class="inline-block">r</span>
                                     <span class="inline-block">o</span>
@@ -123,63 +157,81 @@
                                     <span class="inline-block">t</span>
                               </h1>
                         </div>
-                        <div class="product-container absolute -mt-80 sm:-mt-48 md:-mt-24 lg:-mt-14 xl:m-0 z-[10] md:h-full xl:h-1/2 w-full bg-white top-[30%] ">
-                              <div class="product-container-wrapper w-full h-full flex justify-evenly flex-wrap items-center xl:p-4 lg:p-3">
+                        <div
+                              class="product-container absolute -mt-80 sm:-mt-48 md:-mt-24 lg:-mt-14 xl:m-0 z-[10] md:h-full xl:h-1/2 w-full bg-white top-[30%] ">
+                              <div
+                                    class="product-container-wrapper w-full h-full flex justify-evenly flex-wrap items-center xl:p-4 lg:p-3">
                                     <div class="product-card w-48 xl:h-full rounded-lg">
                                           <div class="product-card-img w-full h-[70%] p-3">
-                                                <img class="w-full h-full object-cover" src="./assets/img/product-1.png" alt="">
+                                                <img class="w-full h-full object-cover" src="./assets/img/product-1.png"
+                                                      alt="">
                                           </div>
-                                          <div class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
-                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.</p>
-                                                <p class="product-card-desc text-center text-gray-400">price:  $100</p>
+                                          <div
+                                                class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
+                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <p class="product-card-desc text-center text-gray-400">price: $100</p>
                                           </div>
                                     </div>
                                     <div class="product-card w-48 xl:h-full rounded-lg">
                                           <div class="product-card-img w-full h-[70%] p-3">
-                                                <img class="w-full h-full object-cover" src="./assets/img/product-2.webp" alt="">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/product-2.webp" alt="">
                                           </div>
-                                          <div class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
-                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.</p>
-                                                <p class="product-card-desc text-center text-gray-400">price:  $100</p>
-                                          </div>
-                                    </div>
-                                    <div class="product-card w-48 xl:h-full rounded-lg">
-                                          <div class="product-card-img w-full h-[70%] p-3">
-                                                <img class="w-full h-full object-cover" src="./assets/img/product-3.png" alt="">
-                                          </div>
-                                          <div class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
-                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.</p>
-                                                <p class="product-card-desc text-center text-gray-400">price:  $100</p>
+                                          <div
+                                                class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
+                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <p class="product-card-desc text-center text-gray-400">price: $100</p>
                                           </div>
                                     </div>
                                     <div class="product-card w-48 xl:h-full rounded-lg">
                                           <div class="product-card-img w-full h-[70%] p-3">
-                                                <img class="w-full h-full object-cover" src="./assets/img/product-4.webp" alt="">
+                                                <img class="w-full h-full object-cover" src="./assets/img/product-3.png"
+                                                      alt="">
                                           </div>
-                                          <div class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
-                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.</p>
-                                                <p class="product-card-desc text-center text-gray-400">price:  $100</p>
+                                          <div
+                                                class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
+                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <p class="product-card-desc text-center text-gray-400">price: $100</p>
                                           </div>
                                     </div>
                                     <div class="product-card w-48 xl:h-full rounded-lg">
                                           <div class="product-card-img w-full h-[70%] p-3">
-                                                <img class="w-full h-full object-cover" src="./assets/img/product-3.png" alt="">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/product-4.webp" alt="">
                                           </div>
-                                          <div class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
-                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.</p>
-                                                <p class="product-card-desc text-center text-gray-400">price:  $100</p>
+                                          <div
+                                                class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
+                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <p class="product-card-desc text-center text-gray-400">price: $100</p>
+                                          </div>
+                                    </div>
+                                    <div class="product-card w-48 xl:h-full rounded-lg">
+                                          <div class="product-card-img w-full h-[70%] p-3">
+                                                <img class="w-full h-full object-cover" src="./assets/img/product-3.png"
+                                                      alt="">
+                                          </div>
+                                          <div
+                                                class="product-card-title w-full h-[30%] p-3 text-sm border-t-2 border-gray-500">
+                                                <p class="product-card-heading text-center">Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <p class="product-card-desc text-center text-gray-400">price: $100</p>
                                           </div>
                                     </div>
                               </div>
                         </div>
-                        
+
                   </div>
             </section>
 
 
             <!-- new arrival  -->
             <section class="new-arrival-section w-full relative">
-                  <div class="new-arrival-title w-full  flex items-center justify-center sticky top-0 py-[2em] text-9xl text-white">
+                  <div
+                        class="new-arrival-title w-full  flex items-center justify-center sticky top-0 py-[2em] text-9xl text-white">
                         <div class="marquee relative overflow-hidden">
                               <div class="marquee-inner flex w-fit flex-auto flex-row">
                                     <div class="marquee-part">
@@ -304,24 +356,27 @@
                   <div id="movement-section-canvas">
                         <div class="movement-text absolute w-full h-screen z-10">
                               <div class="movement-text-title w-full h-full flex items-center justify-center">
-                                    <h1 class="uppercase text-9xl">Movement in time</h1>
+                                    <h1 class="uppercase text-5xl md:text-7xl lg:text-8xl xl:text-9xl">Movement in time
+                                    </h1>
                               </div>
                         </div>
                         <canvas></canvas>
                   </div>
-
             </section>
             <!-- part 2 movement -->
             <section class="movement-type-section w-full h-screen relative">
                   <div class="inner w-full h-full absolute overflow-hidden">
-                        <div class="innerCircle   bg-[#f8eddb] absolute w-[40em] h-[40em] rounded-full border-[15px] border-white -right-[10%] bottom-[0%] "></div>
-                        <div class="inner-btn-back flex items-center justify-center w-fit gap-8 absolute bottom-[5%] left-[10%]">
-                              <div class="product-circle-back  overflow-hidden active-circle  w-24 h-24 rounded-full bg-[#f8eddb]" data-color="#f8eddb"
-                                    data-index="0">
+                        <div
+                              class="innerCircle   bg-[#f8eddb] absolute w-[40em] h-[40em] rounded-full border-[15px] border-white -right-[10%] bottom-[0%] ">
+                        </div>
+                        <div
+                              class="inner-btn-back flex items-center justify-center w-fit gap-8 absolute bottom-[5%] left-[10%]">
+                              <div class="product-circle-back  overflow-hidden active-circle  w-24 h-24 rounded-full bg-[#f8eddb]"
+                                    data-color="#f8eddb" data-index="0">
                                     <img class="w-full h-full object-cover" src="./assets/img/movementImg1.png" alt="">
                               </div>
-                              <div class="product-circle-back  overflow-hidden  w-24 h-24 rounded-full bg-[#c48d36]" data-color="#c48d36"
-                                    data-index="1">
+                              <div class="product-circle-back  overflow-hidden  w-24 h-24 rounded-full bg-[#c48d36]"
+                                    data-color="#c48d36" data-index="1">
                                     <img class="w-full h-full object-cover" src="./assets/img/movementImg2.png" alt="">
                               </div>
                               <div class="product-circle-back  overflow-hidden  -top-[30%] w-24 h-24 rounded-full bg-[#2374ab]"
@@ -329,16 +384,17 @@
                                     <img class="w-full h-full object-cover" src="./assets/img/movementImg3.png" alt="">
                               </div>
                         </div>
-                        <div class="inner-btn flex items-center justify-center w-fit gap-8 absolute z-[10]  bottom-[5%] left-[10%]">
-                              <div class="product-circle overflow-hidden active-circle  w-24 h-24 rounded-full border-2 border-[#f8eddb]" data-color="#f8eddb"
-                                    data-index="0">
+                        <div
+                              class="inner-btn flex items-center justify-center w-fit gap-8 absolute z-[10]  bottom-[5%] left-[10%]">
+                              <div class="product-circle overflow-hidden active-circle  w-24 h-24 rounded-full border-2 border-[#f8eddb]"
+                                    data-color="#f8eddb" data-index="0">
                               </div>
-                              <div class="product-circle overflow-hidden  w-24 h-24 rounded-full border-2 border-[#c48d36]" data-color="#c48d36"
-                                    data-index="1">
+                              <div class="product-circle overflow-hidden  w-24 h-24 rounded-full border-2 border-[#c48d36]"
+                                    data-color="#c48d36" data-index="1">
                               </div>
                               <div class="product-circle overflow-hidden  -top-[30%] w-24 h-24 rounded-full border-2 border-[#2374ab]"
                                     data-color="#2374ab" data-index="2">
-                              
+
                               </div>
                         </div>
                         <div
@@ -354,8 +410,9 @@
             <!-- type of products -->
             <section class="product-type-section w-full h-screen flex">
                   <div class="product-type-left w-[0%] lg:w-[25%] xl:w-[30%]  h-screen relative"></div>
-                  <div class="product-type-right w-[100%] lg:w-[75%] xl:w-[70%] h-screen py-[4em] px-9 lg:pr-9 lg:pl-0 flex flex-col items-center justify-between">
-        
+                  <div
+                        class="product-type-right w-[100%] lg:w-[75%] xl:w-[70%] h-screen py-[4em] px-9 lg:pr-9 lg:pl-0 flex flex-col items-center justify-between">
+
                   </div>
             </section>
 
@@ -363,92 +420,139 @@
             <section class="collection-section w-full bg-white">
                   <div class="partner-section-container h-[400vh]  relative">
                         <div class="partner-container-slides flex w-full h-[100vh] sticky top-0 left-0 overflow-hidden">
-                              <div class="slide  w-full h-screen flex-shrink-0 flex items-center justify-center relative  bg-white">
-                                    <div class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
-                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear</h1>
-                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted with precision and built for durabillity, these timekeeping instruments
+                              <div
+                                    class="slide  w-full h-screen flex-shrink-0 flex items-center justify-center relative  bg-white">
+                                    <div
+                                          class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
+                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear
+                                          </h1>
+                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted
+                                                with precision and built for durabillity, these timekeeping instruments
                                                 offer a perfect blend of form and function.
                                           </p>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-1.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-1.jpg" alt="">
                                           </div>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-11.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-11.jpg" alt="">
                                           </div>
                                     </div>
-                                    <img src="./assets/img/slide1props1.png" alt="" class="slide-overlay absolute bottom-0 left-0">
-                                    <img src="./assets/img/slide1props2.png" alt="" class="slide-overlay absolute right-0 top-0 -rotate-[75deg] -translate-y-1/2">
+                                    <img src="./assets/img/slide1props1.png" alt=""
+                                          class="slide-overlay absolute bottom-0 left-0">
+                                    <img src="./assets/img/slide1props2.png" alt=""
+                                          class="slide-overlay absolute right-0 top-0 -rotate-[75deg] -translate-y-1/2">
                               </div>
-                              <div class="slide w-full h-screen flex-shrink-0  flex items-center justify-center relative bg-white">
-                                    <div class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
-                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear</h1>
-                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted with precision and built for durabillity, these timekeeping instruments
+                              <div
+                                    class="slide w-full h-screen flex-shrink-0  flex items-center justify-center relative bg-white">
+                                    <div
+                                          class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
+                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear
+                                          </h1>
+                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted
+                                                with precision and built for durabillity, these timekeeping instruments
                                                 offer a perfect blend of form and function.
                                           </p>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-2.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-2.jpg" alt="">
                                           </div>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-21.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-21.jpg" alt="">
                                           </div>
                                     </div>
-                                    <img src="./assets/img/slide2props1.png" alt="" class="slide-overlay absolute w-36 h-36 bottom-0 left-[5%]">
-                                    <img src="./assets/img/slide2props2.png" alt="" class="slide-overlay absolute w-36 h-36 sm:w-56 sm:h-56 top-0 right-[5%]">
-                                    <img src="./assets/img/slide2props3.png" alt="" class="slide-overlay absolute bottom-0 left-1/2 w-40 h-40 sm:w-44 sm:h-44">
+                                    <img src="./assets/img/slide2props1.png" alt=""
+                                          class="slide-overlay absolute w-36 h-36 bottom-0 left-[5%]">
+                                    <img src="./assets/img/slide2props2.png" alt=""
+                                          class="slide-overlay absolute w-36 h-36 sm:w-56 sm:h-56 top-0 right-[5%]">
+                                    <img src="./assets/img/slide2props3.png" alt=""
+                                          class="slide-overlay absolute bottom-0 left-1/2 w-40 h-40 sm:w-44 sm:h-44">
                               </div>
-                              <div class="slide slide3 w-full h-screen flex-shrink-0 relative flex items-center justify-center bg-white">
-                                    <div class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
-                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear</h1>
-                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted with precision and built for durabillity, these timekeeping instruments
+                              <div
+                                    class="slide slide3 w-full h-screen flex-shrink-0 relative flex items-center justify-center bg-white">
+                                    <div
+                                          class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
+                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear
+                                          </h1>
+                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted
+                                                with precision and built for durabillity, these timekeeping instruments
                                                 offer a perfect blend of form and function.
                                           </p>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-3.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-3.jpg" alt="">
                                           </div>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-31.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-31.jpg" alt="">
                                           </div>
                                     </div>
-                                     <img src="./assets/img/slide3props1.png" alt="" class="slide-overlay absolute top-0 right-[10%] w-56 h-56">
-                                     <img src="./assets/img/slide3props2.png" alt="" class="slide-overlay absolute bottom-0 left-[5%] w-56 h-56">
+                                    <img src="./assets/img/slide3props1.png" alt=""
+                                          class="slide-overlay absolute top-0 right-[10%] w-56 h-56">
+                                    <img src="./assets/img/slide3props2.png" alt=""
+                                          class="slide-overlay absolute bottom-0 left-[5%] w-56 h-56">
                               </div>
-                              <div class="slide slide4 relative w-full h-screen flex-shrink-0 flex items-center justify-center bg-white">
-                                    <div class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
-                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear</h1>
-                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted with precision and built for durabillity, these timekeeping instruments
+                              <div
+                                    class="slide slide4 relative w-full h-screen flex-shrink-0 flex items-center justify-center bg-white">
+                                    <div
+                                          class="collection-details flex flex-col items-center justify-center w-fit h-fit relative">
+                                          <h1 class="collection-details-title text-6xl sm:text-8xl uppercase">workwear
+                                          </h1>
+                                          <p class="collection-details-desc w-sm sm:text-lg w-3/4 text-center">Crafted
+                                                with precision and built for durabillity, these timekeeping instruments
                                                 offer a perfect blend of form and function.
                                           </p>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-4.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute -top-[100%] left-[5%] md:left-[10%] xl:left-[0%]">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-4.jpg" alt="">
                                           </div>
-                                          <div class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
-                                                <img class="w-full h-full object-cover" src="./assets/img/collection-41.jpg" alt="">
+                                          <div
+                                                class="collection-details-img w-[25vw] sm:w-[15vw] h-[25vw] sm:h-[15vw] rounded-full overflow-hidden bg-sky-900 absolute  top-[100%] sm:top-[120%] xl:top-[100%] left-[80%] sm:left-[80%]  md:left-[90%] xl:left-[100%] -translate-x-1/2 translate-y-1/2 sm:-translate-y-1/2">
+                                                <img class="w-full h-full object-cover"
+                                                      src="./assets/img/collection-41.jpg" alt="">
                                           </div>
                                     </div>
-                                     <img src="./assets/img/slide4props1.png" alt="" class="slide-overlay absolute top-0 right-[15%] w-32 sm:w-36 md:w-40 lg:w-44 h-32 sm:h-36 md:h-40 lg:h-44">
-                                     <img src="./assets/img/slide4props2.png" alt="" class="slide-overlay absolute w-40 sm:w-44 md:w-48 xl:w-50 h-40 sm:h-44 md:h-48 xl:h-50 bottom-[15%] sm:bottom-0 left-0">
-                                     <img src="./assets/img/slide4props3.png" alt="" class="slide-overlay absolute w-40 sm:w-44 md:w-50 lg:w-56 h-40 sm:h-44 md:h-50 lg:h-56 bottom-0 left-1//2">
+                                    <img src="./assets/img/slide4props1.png" alt=""
+                                          class="slide-overlay absolute top-0 right-[15%] w-32 sm:w-36 md:w-40 lg:w-44 h-32 sm:h-36 md:h-40 lg:h-44">
+                                    <img src="./assets/img/slide4props2.png" alt=""
+                                          class="slide-overlay absolute w-40 sm:w-44 md:w-48 xl:w-50 h-40 sm:h-44 md:h-48 xl:h-50 bottom-[15%] sm:bottom-0 left-0">
+                                    <img src="./assets/img/slide4props3.png" alt=""
+                                          class="slide-overlay absolute w-40 sm:w-44 md:w-50 lg:w-56 h-40 sm:h-44 md:h-50 lg:h-56 bottom-0 left-1//2">
                               </div>
                         </div>
                   </div>
             </section>
 
             <!-- login section  -->
-             <section class="login-section w-full h-screen bg-white relative">
-                  <video class="w-full h-full object-cover absolute" src="./assets/img/loginVideo.mp4" loop autoplay muted></video>
+            <section class="login-section w-full h-screen bg-white relative">
+                  <video class="w-full h-full object-cover absolute" src="./assets/img/loginVideo.mp4" loop autoplay
+                        muted></video>
                   <div class="login-overlay absolute w-full h-full z-2 bg-white flex items-center justify-center ">
                         <div class="login-details flex items-center justify-center flex-col bg-white px-9 rounded-md">
-                              <h1 class="login-details-title py-9 text-xl sm:text-3xl">LOGIN FOR THE BEST EXPERIENCE</h1>
-                              <div class="login-details-btn uppercase text-lg mb-9 py-4 px-8 bg-[#c48d36] rounded-full text-white">login</div>
+                              <h1 class="login-details-title py-9 text-xl sm:text-3xl">LOGIN FOR THE BEST EXPERIENCE
+                              </h1>
+                              <div
+                                    class="login-details-btn uppercase text-lg mb-9 py-4 px-8 bg-[#c48d36] rounded-full text-white">
+                                    login</div>
                         </div>
 
                   </div>
-             </section>
+            </section>
 
-             <!-- footer section  -->
-              <section class="footer-section bg-[#3b3b3b] w-full h-screen pt-[3em] sm:pt-[4em] relative overflow-hidden">
+            <!-- footer section  -->
+            <section class="footer-section bg-[#3b3b3b] w-full h-screen pt-[3em] sm:pt-[4em] relative overflow-hidden">
                   <div class="footer-social-media border-b-4 border-white">
-                        <div class="footer-social-media-inner px-10 sm:px-24 text-sm sm:text-lg flex items-center justify-between text-white uppercase overflow-hidden">
+                        <div
+                              class="footer-social-media-inner px-10 sm:px-24 text-sm sm:text-lg flex items-center justify-between text-white uppercase overflow-hidden">
                               <h2 class="footer-social-title py-4">instagram</h2>
                               <h2 class="footer-social-title py-4">instagram</h2>
                               <h2 class="footer-social-title py-4">instagram</h2>
@@ -456,7 +560,8 @@
                         </div>
                   </div>
                   <div class="footer-title absolute w-full h-1/2 px-12 sm:px-16 md:px-20 lg:px-24 xl:px-36">
-                        <h1 class="footer-heading flex text-[6rem] sm:text-[10rem] md:text-[15rem] lg:text-[20em] uppercase items-start justify-between text-white leading-none mt-28 sm:mt-12 md:mt-0 lg:-mt-5 ">
+                        <h1
+                              class="footer-heading flex text-[6rem] sm:text-[10rem] md:text-[15rem] lg:text-[20em] uppercase items-start justify-between text-white leading-none mt-28 sm:mt-12 md:mt-0 lg:-mt-5 ">
                               <span class="inline-block">t</span>
                               <span class="inline-block">i</span>
                               <span class="inline-block">t</span>
@@ -465,8 +570,8 @@
                         </h1>
                   </div>
                   <img class="w-full h-full object-cover " src="./assets/img/footerImgTry.jpg" alt="">
-                  
-              </section>
+
+            </section>
       </div>
 
 
