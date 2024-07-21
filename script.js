@@ -956,7 +956,7 @@ function typeOfProductsSection(){
         name: "smart watch",
         imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw869c9036/images/titantraveller_thumbnail.jpg"
     }, {
-        name: "premium watches",
+        name: "premium",
         imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw23da7056/images/Category%20Images/TItan-Edge.jpg"
     }, {
         name: "watches",
@@ -965,8 +965,8 @@ function typeOfProductsSection(){
     
     typeProductData.forEach((type) => {
         document.querySelector(".product-type-right").innerHTML += `<div class="product-type-title w-full flex justify-center relative">
-                                  <h1 class="text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
-                                  <div class="product-type-img opacity-0 w-36 h-44 bg-rose-400 absolute -left-[30%]">
+                                  <h1 class="text-5xl sm:text-7xl lg:text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
+                                  <div class="product-type-img opacity-0 w-36 h-44 bg-rose-400 absolute left-[0%] lg:-left-[25%] xl:-left-[30%]">
                                     <img class="w-full h-full object-cover" src="${type.imgUrl}" alt="${type.name}">
                                   </div>
                             </div>`
