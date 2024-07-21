@@ -748,23 +748,25 @@ function modelCanvas() {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
         canvas: document.getElementById('canvas2'),
-        alpha: false
+        alpha: true
     });
 
-    renderer.setSize(window.innerWidth / 2, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    // renderer.setSize(window.innerWidth / 2, window.innerHeight);
+    // document.body.appendChild(renderer.domElement);
+    setRendererSize();
 
     const loader = new GLTFLoader();
     let models = [];
     let centralPoint = new THREE.Object3D();
     scene.add(centralPoint);
-    centralPoint.position.set(2, -10, 0);
+    // centralPoint.position.set(2, -10, 0);
+    setCentralPointPosition();
     centralPoint.rotateZ(Math.PI / 2)
 
     const modelData = [
         { url: watch1, scale: 1.3, rotateZ: (Math.PI / 2) },
-        { url: watch2, scale: 50, rotateZ: (Math.PI / 4) },
-        { url: watch3, scale: 7, rotateZ: (Math.PI / 2) }
+        { url: watch2, scale: 45, rotateZ: (Math.PI / 4) },
+        { url: watch3, scale: 5, rotateZ: (Math.PI / 2) }
     ];
 
     function loadModels() {
@@ -852,13 +854,43 @@ function modelCanvas() {
         });
     });
 
-    window.addEventListener('resize', () => {
-        const width = window.innerWidth / 2;
+    function setCentralPointPosition() {
+        const width = window.innerWidth;
+        if (width > 1280) {
+            centralPoint.position.set(2, -10, 0); 
+        } else if (width > 1024) {
+            centralPoint.position.set(1, -10, 0); 
+        } else if (width > 768){
+            centralPoint.position.set(0, -11, 0);
+        }
+         else {
+            centralPoint.position.set(0, -10, 0); 
+        }
+    }
+
+    function setRendererSize() {
+        const width = window.innerWidth < 768 ? window.innerWidth : window.innerWidth / 2;
         const height = window.innerHeight;
         renderer.setSize(width, height);
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
+    }
+
+    // window.addEventListener('resize', () => {
+    //     const width = window.innerWidth / 2;
+    //     const height = window.innerHeight;
+    //     renderer.setSize(width, height);
+    //     camera.aspect = width / height;
+    //     setCentralPointPosition();
+    //     camera.updateProjectionMatrix();
+    // });
+    window.addEventListener('resize', () => {
+        setRendererSize();
+        setCentralPointPosition();
     });
+
+    setRendererSize();
+    setCentralPointPosition();
 }
 
 function onClickMovementSetionBgChange() {
@@ -894,7 +926,7 @@ function onClickMovementSetionBgChange() {
                 onComplete: function () {
                     descriptionDiv.querySelector('.movement-type-title').textContent = title;
                     descriptionDiv.querySelector('.movement-type-desc').textContent = desc;
-                    gsap.to(descriptionDiv, { duration: 0.5, width: '40%' });
+                    gsap.to(descriptionDiv, { duration: 0.5, width: window.innerWidth > 768 ? '40%': "100%" });
                 }
             });
 
@@ -985,17 +1017,17 @@ function typeOfProductsSection(){
         scrollTrigger: {
             trigger: ".product-type-section",
             start: "top 35%",
-            end: "bottom 0%",
+            end: "top 0%",
             markers: false,
             scroller: ".main",
-            onEnter: () => document.querySelector('.main').setAttribute('theme', 'white'),
-            onLeave: () => {
-                document.querySelector('.main').removeAttribute('theme')
-            },
-            onEnterBack: () => document.querySelector('.main').setAttribute('theme', 'white'),
-            onLeaveBack: () => {
-                document.querySelector('.main').removeAttribute('theme')
-            },
+            // onEnter: () => document.querySelector('.main').setAttribute('theme', 'white'),
+            // onLeave: () => {
+            //     document.querySelector('.main').removeAttribute('theme')
+            // },
+            // onEnterBack: () => document.querySelector('.main').setAttribute('theme', 'white'),
+            // onLeaveBack: () => {
+            //     document.querySelector('.main').removeAttribute('theme')
+            // },
             scrub: true
         },
         background: "#ffffff",
@@ -1268,3 +1300,30 @@ window.onload = function() {
 }
 
 
+//modify navbar and nav icon accronding to background
+gsap.to(".navbar-upper-section", {
+    scrollTrigger: {
+        trigger: ".movement-type-section",
+        scroller: ".main",
+        start: "top 90%",
+        end: "bottom 90%",
+        scrub: true,
+        markers: false,
+    },
+    yPercent: -100,
+    ease: "power3.inOut",
+    onComplete: ()=>{
+        gsap.to(".navbar-upper-section", {
+            yPercent: 0,
+            duration: 0.5,
+            ease: "power3.inOut",
+        })
+    }
+})
+//todo:- change color of icon in all section and change menu button color 
+
+
+
+
+
+//todo:- cursor making 
