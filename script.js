@@ -14,7 +14,6 @@ import watch3 from "./assets/models/type2.glb"
 
 
 
-
 const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
@@ -33,7 +32,7 @@ controls.update();
 camera.position.set(0, 0, 5)
 
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 2); 
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
@@ -50,7 +49,7 @@ const loader = new GLTFLoader();
 //!!important change this url
 const watchURL = new URL('./assets/models/try.glb', import.meta.url);
 let heroTimeline = gsap.timeline({
-    paused: true ,
+    paused: true,
     onComplete: () => {
         document.addEventListener('mousemove', onMouseMove);
     }
@@ -74,13 +73,13 @@ loader.load(watchURL.href, function (gltf) {
     heroTimeline.to(model.rotation, { duration: 2, x: 0, y: -0.7, z: 0, ease: 'power2.inOut' }, "a");
     heroTimeline.to(model.scale, { duration: 2, x: 2.5, y: 2.5, z: 2.5, ease: 'power2.inOut' }, "a");
 
-    
+
     function setModelScaleAnimation(model) {
         const targetScale = window.innerWidth < 764 ? 0.5 : 1;
         heroTimeline.to(model.position, { duration: 2, x: window.innerWidth < 764 ? 0 : 0.5, y: 0, z: 0, ease: 'power2.inOut' }, "b");
         heroTimeline.to(model.rotation, { duration: 2, x: 0, y: 0, z: 0, ease: 'power2.inOut' }, "b");
         heroTimeline.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
-        
+
     }
     setModelScaleAnimation(model)
     // heroTimeline.to(model.scale, { duration: 2, x: targetScale, y: targetScale, z: targetScale, ease: 'power2.inOut' }, "b");
@@ -201,7 +200,6 @@ window.addEventListener('beforeunload', () => {
 
 
 // add svg to navbar logo
-// let svgLogoColor = "#FFFFFF"
 const getSvgLogo = (color) => {
     return ` <svg id="Group_11948" data-name="Group 11948" xmlns="http://www.w3.org/2000/svg" width="124" height="22" viewBox="0 0 124 22">
                                     <g id="Layer_x0020_1" transform="translate(35.939)">
@@ -218,6 +216,7 @@ function updateSvgColor(color) {
 // Initial SVG render
 updateSvgColor("#FFFFFF");
 
+// Menu animation
 function menuOpenBtn() {
     let isOpen = false;
 
@@ -248,7 +247,7 @@ function menuOpenBtn() {
                         icon.classList.remove('text-black');
                     });
                     updateSvgColor("#FFFFFF");
-                    document.querySelector(".menu-btn").classList.add("bg-white", "text-black");
+                    document.querySelector(".menu-btn").classList.add("text-black");
                     document.querySelector(".menu-btn").classList.remove("bg-black");
                     // document.querySelector(".menu-btn > div > div").classList.add("-translate-y-6")
                 },
@@ -280,7 +279,7 @@ function menuOpenBtn() {
                     });
                     updateSvgColor("#000000");
                     document.querySelector(".menu-btn").classList.add("bg-black", "text-white");
-                    document.querySelector(".menu-btn").classList.remove("bg-white", "text-black");
+                    document.querySelector(".menu-btn").classList.remove("text-black");
                 },
                 duration: 1,
                 ease: "power2.out"
@@ -679,7 +678,7 @@ https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_159.jpg
             trigger: `.movement-section`,
             start: `top top`,
             end: `250% top`,
-            scroller: `.main`,
+            scroller: ".main",
         },
         onUpdate: render,
     });
@@ -714,7 +713,7 @@ https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_159.jpg
 
         trigger: ".movement-section",
         pin: true,
-        scroller: `.main`,
+        scroller: ".main",
         start: `top top`,
         end: `250% top`,
 
@@ -857,14 +856,14 @@ function modelCanvas() {
     function setCentralPointPosition() {
         const width = window.innerWidth;
         if (width > 1280) {
-            centralPoint.position.set(2, -10, 0); 
+            centralPoint.position.set(2, -10, 0);
         } else if (width > 1024) {
-            centralPoint.position.set(1, -10, 0); 
-        } else if (width > 768){
+            centralPoint.position.set(1, -10, 0);
+        } else if (width > 768) {
             centralPoint.position.set(0, -11, 0);
         }
-         else {
-            centralPoint.position.set(0, -10, 0); 
+        else {
+            centralPoint.position.set(0, -10, 0);
         }
     }
 
@@ -926,7 +925,7 @@ function onClickMovementSetionBgChange() {
                 onComplete: function () {
                     descriptionDiv.querySelector('.movement-type-title').textContent = title;
                     descriptionDiv.querySelector('.movement-type-desc').textContent = desc;
-                    gsap.to(descriptionDiv, { duration: 0.5, width: window.innerWidth > 768 ? '40%': "100%" });
+                    gsap.to(descriptionDiv, { duration: 0.5, width: window.innerWidth > 768 ? '40%' : "100%" });
                 }
             });
 
@@ -984,7 +983,7 @@ const circles = document.querySelectorAll('.product-circle');
 
 
 // type of products
-function typeOfProductsSection(){
+function typeOfProductsSection() {
     let typeProductData = [{
         name: "men",
         imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dw3b1db283/images/Category%20Images/Men.jpg"
@@ -1001,7 +1000,7 @@ function typeOfProductsSection(){
         name: "watches",
         imgUrl: "https://www.titan.co.in/on/demandware.static/-/Library-Sites-TitanSharedLibrary/default/dwcb076392/images/Category%20Images/Watches_mega.jpg"
     }]
-    
+
     typeProductData.forEach((type) => {
         document.querySelector(".product-type-right").innerHTML += `<div class="product-type-title w-full flex justify-center relative">
                                   <h1 class="text-5xl sm:text-7xl lg:text-8xl text-black uppercase opacity-50 w-full text-center border-t-2 border-black">${type.name}</h1>
@@ -1010,9 +1009,9 @@ function typeOfProductsSection(){
                                   </div>
                             </div>`
     })
-    
+
     //product type section background change
-    
+
     gsap.to(".new-arrival-background", {
         scrollTrigger: {
             trigger: ".product-type-section",
@@ -1034,19 +1033,19 @@ function typeOfProductsSection(){
         duration: 1,
         ease: "ease.in"
     });
-    
+
     //product type section hover animation
-    
+
     document.querySelectorAll(".product-type-title")
         .forEach(function (member) {
-    
+
             member.addEventListener('mousemove', function (e) {
                 const img = this.querySelector(".product-type-img");
                 const windowWidth = window.innerWidth;
                 const centerX = windowWidth / 2;
                 const offsetX = e.clientX - centerX;
                 const rotationDegree = gsap.utils.mapRange(-centerX, centerX, -15, 15, offsetX); // Adjust rotation range as needed
-    
+
                 gsap.to(img, {
                     opacity: 1,
                     x: gsap.utils.mapRange(0, windowWidth, -200, 200, e.clientX),
@@ -1055,7 +1054,7 @@ function typeOfProductsSection(){
                     duration: 0.5
                 });
             });
-    
+
             member.addEventListener('mouseleave', function () {
                 const img = this.querySelector(".product-type-img");
                 gsap.to(img, {
@@ -1065,13 +1064,13 @@ function typeOfProductsSection(){
                 });
             });
         });
-    
+
 }
 
 typeOfProductsSection();
 
 //collection section
-function collectionSection(){
+function collectionSection() {
     const collectionSectionAnimation = () => {
         gsap.to(".slide", {
             scrollTrigger: {
@@ -1086,9 +1085,9 @@ function collectionSection(){
             ease: "power3.inOut"
         })
     }
-    
+
     collectionSectionAnimation()
-    
+
     document.querySelector('.login-details-btn').addEventListener('mouseover', () => {
         gsap.to(".login-overlay", {
             background: "transparent",
@@ -1096,7 +1095,7 @@ function collectionSection(){
             ease: "expo.easeInOut"
         })
     })
-    
+
     document.querySelector('.login-details-btn').addEventListener('mouseleave', () => {
         gsap.to(".login-overlay", {
             background: "#ffffff",
@@ -1104,14 +1103,14 @@ function collectionSection(){
             ease: "expo.easeInOut"
         })
     })
-    
+
 }
 
 collectionSection();
 
 
 //footer section
-function footerSection(){
+function footerSection() {
     let footerTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: ".footer-section",
@@ -1120,7 +1119,7 @@ function footerSection(){
             end: "top 30%",
             scrub: true,
             markers: false,
-    
+
         }
     })
     footerTimeline.from(".footer-heading > span", {
@@ -1129,9 +1128,9 @@ function footerSection(){
         duration: 1,
         ease: "power3.inOut",
         stagger: 0.2,
-    
+
     })
-    
+
     footerTimeline.from(".footer-section > img", {
         y: 500,
         opacity: 0,
@@ -1139,7 +1138,7 @@ function footerSection(){
         ease: "ease.in",
         stagger: 0.2,
     })
-    
+
 }
 
 footerSection();
@@ -1175,8 +1174,8 @@ function applyMagneticEffect(element, power) {
     });
 }
 
-document.querySelectorAll('.menu-item h1').forEach((el)=>applyMagneticEffect(el, 0.1));
-document.querySelectorAll('.icon').forEach((el)=>applyMagneticEffect(el, 0.5));
+document.querySelectorAll('.menu-item h1').forEach((el) => applyMagneticEffect(el, 0.1));
+document.querySelectorAll('.icon').forEach((el) => applyMagneticEffect(el, 0.5));
 
 // navbar hover animation 
 document.querySelectorAll('.menu-wrapper').forEach(wrapper => {
@@ -1184,7 +1183,7 @@ document.querySelectorAll('.menu-wrapper').forEach(wrapper => {
     wrapper.addEventListener('mouseenter', () => {
         gsap.to(wrapper.querySelector('.menu-item'), { y: -height, duration: 0.5 });
     });
-    
+
     wrapper.addEventListener('mouseleave', () => {
         gsap.to(wrapper.querySelector('.menu-item'), { y: 0, duration: 0.5 });
     });
@@ -1193,30 +1192,31 @@ document.querySelectorAll('.menu-wrapper').forEach(wrapper => {
 
 //try loading page
 function animateClock() {
-    const duration = 5; 
-    let loadingTimeline = 
-    gsap.to("#percentage", {
-        duration: duration,
-        innerText: 100,
-        ease: "power1.out",
-        snap: { innerText: 1 },
-        onUpdate: function () {
-            const element = document.getElementById("percentage");
-            element.innerText = Math.round(element.innerText) + '%';
-        },
-        onComplete: function () {
-            
-            gsap.to(".loading-screen", {
-                duration: 0.5,
-                clipPath: "circle(0% at 50% 50%)",
-                ease: "power4.in",
-                onComplete: function () {
-                    // document.querySelector(".loading-screen").style.display = "none";
-                    heroTimeline.play();
-                }
-            });
-        }
-    });
+    const duration = 5;
+    let loadingTimeline =
+        gsap.to("#percentage", {
+            duration: duration,
+            innerText: 100,
+            ease: "power1.out",
+            snap: { innerText: 1 },
+            onUpdate: function () {
+                const element = document.getElementById("percentage");
+                element.innerText = Math.round(element.innerText) + '%';
+            },
+            onComplete: function () {
+
+                gsap.to(".loading-screen", {
+                    duration: 0.5,
+                    clipPath: "circle(0% at 50% 50%)",
+                    ease: "power4.in",
+                    onComplete: function () {
+
+                        heroTimeline.play();
+                        // document.querySelector(".loading-screen").style.display = "none";
+                    }
+                });
+            }
+        });
 
     gsap.to(".minute-hand", {
         rotation: 360,
@@ -1230,8 +1230,8 @@ function animateClock() {
     const textElement = document.querySelector("#shuffling-text");
     const originalText = textElement.innerText;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    gsap.fromTo(textElement, 
-        { innerText: originalText }, 
+    gsap.fromTo(textElement,
+        { innerText: originalText },
         {
             duration: duration / 2,
             ease: "none",
@@ -1294,8 +1294,7 @@ originalText.split('').forEach((char, index) => {
 timeline.play();
 */
 }
-
-window.onload = function() {
+window.onload = function () {
     animateClock();
 }
 
@@ -1312,7 +1311,7 @@ gsap.to(".navbar-upper-section", {
     },
     yPercent: -100,
     ease: "power3.inOut",
-    onComplete: ()=>{
+    onComplete: () => {
         gsap.to(".navbar-upper-section", {
             yPercent: 0,
             duration: 0.5,
@@ -1321,9 +1320,168 @@ gsap.to(".navbar-upper-section", {
     }
 })
 //todo:- change color of icon in all section and change menu button color 
+gsap.registerPlugin(ScrollTrigger);
 
+function changeColors() {
+    gsap.to('.icon', {
+        color: 'black', duration: 0.5, scrollTrigger: {
+            trigger: '.product-type-section',
+            scroller: ".main",
+            start: 'top center',
+            markers: false,
+            scrub: true,
+            onEnter: () => updateSvgColor("#000000"),
+            onEnterBack: () => updateSvgColor("#000000"),
+            onLeaveBack: () => updateSvgColor("#ffffff")
+        },
 
+    });
+    gsap.to('.icon', {
+        color: 'white', duration: 0.5, scrollTrigger: {
+            trigger: '.footer-section',
+            scroller: ".main",
+            start: 'top center',
+            end: '5% center',
+            markers: false,
+            scrub: true,
+            onEnter: () => updateSvgColor("#ffffff"),
+            onLeaveBack: () => {
+                updateSvgColor("#000000")
+            }
 
+            // onLeave: ()=>updateSvgColor("#000000")
+        },
+
+    });
+
+}
+
+changeColors()
 
 
 //todo:- cursor making 
+function cursorAnimationPage1() {
+    let cursorflow = document.querySelector(".cursor-flow");
+    let cursorText = document.querySelector(".cursor-flow span")
+    let page = document.querySelector(".main");
+    let productSection = document.querySelector(".product-section")
+    page.addEventListener("mousemove", (e) => {
+        // page1_cursor.style.left = e.pageX + "px";
+        // page1_cursor.style.top = e.pageY + "px";
+        gsap.to(cursorflow, {
+            top: (e.y + 10),
+            left: (e.x + 10),
+            duration: 0.5,
+            opacity: 1,
+        })
+    })
+    productSection.addEventListener("mouseenter", () => {
+        gsap.to(cursorflow, {
+            background: "transparent",
+            duration: 0.1,
+            width: "64px",
+            height: "64px",
+            ease: "power4.in"
+        })
+        cursorText.textContent = "hover";
+
+    })
+    productSection.addEventListener("mouseleave", () => {
+        gsap.to(cursorflow, {
+            background: "#f8eddb",
+            duration: 0.1,
+            width: "0",
+            height: "0",
+            ease: "power4.in"
+        })
+        cursorText.textContent = "";
+    })
+
+    document.querySelector(".menu-btn").addEventListener("mouseenter", () => {
+        gsap.to(cursorflow, {
+            background: "transparent",
+            duration: 0.1,
+            width: "64px",
+            height: "64px",
+            ease: "power4.in"
+        })
+        cursorText.textContent = "click";
+
+    })
+
+    document.querySelector(".menu-btn").addEventListener("mouseleave", () => {
+        gsap.to(cursorflow, {
+            background: "#f8eddb",
+            duration: 0.1,
+            width: "0",
+            height: "0",
+            ease: "power4.in"
+        })
+        cursorText.textContent = "";
+    })
+
+    
+    document.querySelectorAll(".brand").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+            gsap.to(cursorflow, {
+                background: "transparent",
+                duration: 0.1,
+                width: "64px",
+                height: "64px",
+                ease: "power4.in"
+            })
+            cursorText.textContent = "drag";
+
+        })
+    })
+
+    document.querySelectorAll(".brand").forEach((el) => {
+        el.addEventListener("mouseleave", () => {
+            gsap.to(cursorflow, {
+                background: "#f8eddb",
+                duration: 0.1,
+                width: "0",
+                height: "0",
+                ease: "power4.in"
+            })
+            cursorText.textContent = "";
+        })
+    })
+
+    document.querySelectorAll(".inner-btn").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+            gsap.to(cursorflow, {
+                background: "transparent",
+                duration: 0.1,
+                width: "64px",
+                height: "64px",
+                ease: "power4.in"
+            })
+            cursorText.textContent = "click";
+
+        })
+    })
+
+    document.querySelectorAll(".inner-btn").forEach((el) => {
+        el.addEventListener("mouseleave", () => {
+            gsap.to(cursorflow, {
+                background: "#f8eddb",
+                duration: 0.1,
+                width: "0",
+                height: "0",
+                ease: "power4.in"
+            })
+            cursorText.textContent = "";
+        })
+    })
+}
+
+cursorAnimationPage1()
+
+
+// document.querySelector(".go-to-btn").addEventListener("click", function() {
+//     window.scrollTo({
+//         top: 0,
+//         behavior: "smooth" 
+//     });
+// });
