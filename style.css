@@ -59,6 +59,14 @@ canvas {
       z-index: 2;
       pointer-events: none;
 }
+
+
+
+#movement-section-canvas>canvas{
+      max-height: 100vh;
+      max-width: 100vw;
+      position: relative;
+  }
 .container_mouse .mouse-btn .mouse-scroll{
       animation: scrolling 1s linear infinite;
 }
@@ -154,11 +162,7 @@ canvas {
   }
 
 
-  #movement-section-canvas>canvas{
-      max-height: 100vh;
-      max-width: 100vw;
-      position: relative;
-  }
+ 
 
   .innerCircle {
       transition: background-color 0.5s;

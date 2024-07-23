@@ -672,7 +672,8 @@ https://pradip2004.github.io/magmaClone/assets/img/frames/titan-watch_159.jpg
     gsap.to(imageSeq, {
         frame: frameCount - 1,
         snap: "frame",
-        ease: `none`,
+        ease: `ease.in`,
+        // ease: `none`,
         scrollTrigger: {
             scrub: .5,
             trigger: `.movement-section`,
